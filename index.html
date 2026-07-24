@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基隆北海岸三天兩夜親子包棟之旅 · 2026/11/13–15</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] },
+        colors: {
+          brand: {
+            50:'#f0fdfa',100:'#ccfbf1',200:'#99f6e4',300:'#5eead4',
+            400:'#2dd4bf',500:'#14b8a6',600:'#0d9488',700:'#0f766e',
+            800:'#115e59',900:'#134e4a'
+          }
+        }
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background-color: #fafaf9; }
+  .tl-line::before {
+    content:''; position:absolute; left:19px; top:8px; bottom:-8px;
+    width:2px; background:linear-gradient(#5eead4,#e7e5e4);
+  }
+  .tab-active { background:#0f766e; color:#fff; box-shadow:0 8px 20px -8px rgba(15,118,110,.6); }
+  .fade-in { animation: fade .4s ease; }
+  @keyframes fade { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+  .card-hover { transition:transform .2s, box-shadow .2s; }
+  .card-hover:hover { transform:translateY(-3px); box-shadow:0 18px 30px -18px rgba(15,118,110,.5); }
+</style>
+</head>
+<body class="font-sans text-stone-800">
+
+<!-- ===== 頂部導覽 ===== -->
+<nav class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-stone-200">
+  <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2 font-black text-brand-700">
+      <i class="fa-solid fa-umbrella-beach text-brand-500"></i>
+      <span>基隆北海岸親子行</span>
+    </a>
+    <div class="hidden md:flex items-center gap-6 text-sm font-medium text-stone-600">
+      <a href="#overview" class="hover:text-brand-600">總覽</a>
+      <a href="#itinerary" class="hover:text-brand-600">行程</a>
+      <a href="#booking" class="hover:text-brand-600">必預約</a>
+      <a href="#stay" class="hover:text-brand-600">住宿</a>
+      <a href="#checklist" class="hover:text-brand-600">行前準備</a>
+    </div>
+    <a href="#booking" class="md:hidden text-brand-700 text-sm font-bold"><i class="fa-solid fa-bell"></i> 必預約</a>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<header id="top" class="relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-brand-600 via-brand-700 to-brand-900"></div>
+  <div class="absolute inset-0 opacity-20" style="background-image:radial-gradient(circle at 20% 30%,#5eead4 0,transparent 40%),radial-gradient(circle at 80% 70%,#2dd4bf 0,transparent 45%);"></div>
+  <div class="relative max-w-5xl mx-auto px-4 py-16 md:py-24 text-white">
+    <p class="inline-flex items-center gap-2 bg-white/15 backdrop-blur px-3 py-1 rounded-full text-sm font-medium mb-5">
+      <i class="fa-solid fa-calendar-check"></i> 2026 / 11 / 13（五）– 11 / 15（日）
+    </p>
+    <h1 class="text-4xl md:text-6xl font-black leading-tight mb-4">
+      基隆・北海岸<br>三天兩夜親子包棟之旅
+    </h1>
+    <p class="text-brand-100 text-lg md:text-xl max-w-2xl mb-8">
+      漁港彩色屋、鐵道自行車、山城老街，連住金山兩晚免拉行李。10 人（9 大 1 小）自駕慢遊。
+    </p>
+    <div class="flex flex-wrap gap-3 text-sm">
+      <span class="bg-white/15 backdrop-blur px-4 py-2 rounded-lg"><i class="fa-solid fa-users mr-1"></i> 10 人（9大1小）</span>
+      <span class="bg-white/15 backdrop-blur px-4 py-2 rounded-lg"><i class="fa-solid fa-car-side mr-1"></i> 自駕 2 車</span>
+      <span class="bg-white/15 backdrop-blur px-4 py-2 rounded-lg"><i class="fa-solid fa-house-chimney mr-1"></i> 金山連住 2 晚包棟</span>
+      <span class="bg-white/15 backdrop-blur px-4 py-2 rounded-lg"><i class="fa-solid fa-moon mr-1"></i> 3 天 2 夜</span>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4">
+
+<!-- ===== 行程總覽 ===== -->
+<section id="overview" class="py-12">
+  <h2 class="text-2xl md:text-3xl font-black text-brand-800 mb-6 flex items-center gap-2">
+    <i class="fa-solid fa-map-location-dot text-brand-500"></i> 行程總覽
+  </h2>
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="card-hover bg-white rounded-2xl border border-stone-200 p-5">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center font-black">D1</span>
+        <div><p class="font-bold">11/13（五）</p><p class="text-xs text-stone-500">基隆與和平島</p></div>
+      </div>
+      <p class="text-sm text-stone-600 leading-relaxed">南港取車 → 基隆市區 → 和平島公園 → 正濱漁港彩色屋 → 海龍珠水產晚餐 → 入住金山。</p>
+    </div>
+    <div class="card-hover bg-white rounded-2xl border border-stone-200 p-5">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center font-black">D2</span>
+        <div><p class="font-bold">11/14（六）</p><p class="text-xs text-stone-500">鐵道與山城</p></div>
+      </div>
+      <p class="text-sm text-stone-600 leading-relaxed">深澳鐵道自行車 → 九份 或 十分（擇一深玩）→ 兄弟食堂晚餐 → 返回金山。</p>
+    </div>
+    <div class="card-hover bg-white rounded-2xl border border-stone-200 p-5">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center font-black">D3</span>
+        <div><p class="font-bold">11/15（日）</p><p class="text-xs text-stone-500">金山悠閒賦歸</p></div>
+      </div>
+      <p class="text-sm text-stone-600 leading-relaxed">金山老街 → 海邊咖啡（洋荳子 / 我們在海邊）→ 還車賦歸。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 行程時間軸（分頁） ===== -->
+<section id="itinerary" class="py-8">
+  <h2 class="text-2xl md:text-3xl font-black text-brand-800 mb-6 flex items-center gap-2">
+    <i class="fa-solid fa-route text-brand-500"></i> 行程時間軸
+  </h2>
+
+  <div class="flex gap-2 mb-8 bg-stone-100 p-1.5 rounded-2xl">
+    <button data-tab="1" class="tab-btn tab-active flex-1 py-3 rounded-xl font-bold text-sm transition">Day 1<span class="hidden sm:inline"> · 基隆和平島</span></button>
+    <button data-tab="2" class="tab-btn flex-1 py-3 rounded-xl font-bold text-sm text-stone-600 transition">Day 2<span class="hidden sm:inline"> · 鐵道山城</span></button>
+    <button data-tab="3" class="tab-btn flex-1 py-3 rounded-xl font-bold text-sm text-stone-600 transition">Day 3<span class="hidden sm:inline"> · 金山賦歸</span></button>
+  </div>
+
+  <!-- Day 1 -->
+  <div class="tab-panel fade-in" data-panel="1">
+    <div class="space-y-5">
+      <div class="tl-line relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-car"></i></span>
+        <h3 class="font-bold text-lg">南港取車出發</h3>
+        <p class="text-sm text-stone-600">兩台車於南港會合取車，出發前往基隆。</p>
+      </div>
+      <div class="tl-line relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-store"></i></span>
+        <h3 class="font-bold text-lg">基隆市區 · 仁愛市場 / 廟口</h3>
+        <p class="text-sm text-stone-600">在地小吃早午餐，仁愛市場二樓美食街或廟口夜市周邊皆宜。</p>
+      </div>
+      <div class="tl-line relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-umbrella-beach"></i></span>
+        <h3 class="font-bold text-lg">和平島公園</h3>
+        <p class="text-sm text-stone-600">戶外海蝕地景與親子戲水區。</p>
+        <p class="mt-1 text-xs bg-amber-50 text-amber-700 border border-amber-200 rounded-lg px-3 py-2 inline-block"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 冬季開放時間可能調整，出發前請先上官網／電話確認當日開放與秘境導覽場次。</p>
+      </div>
+      <div class="tl-line relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-camera"></i></span>
+        <h3 class="font-bold text-lg">正濱漁港彩色屋</h3>
+        <p class="text-sm text-stone-600">彩色建築倒映水面，親子拍照打卡點，步行即到阿根納造船廠遺構。</p>
+      </div>
+      <div class="tl-line relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-utensils"></i></span>
+        <h3 class="font-bold text-lg">晚餐 · 海龍珠水產</h3>
+        <p class="text-sm text-stone-600">合菜海鮮，10 人需<strong>提前訂大圓桌</strong>。</p>
+        <span class="mt-1 inline-block text-xs bg-rose-50 text-rose-700 border border-rose-200 rounded-full px-3 py-1"><i class="fa-solid fa-bell mr-1"></i> 需訂位</span>
+      </div>
+      <div class="relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-700 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-bed"></i></span>
+        <h3 class="font-bold text-lg">入住金山包棟民宿</h3>
+        <p class="text-sm text-stone-600">基隆 → 金山約 <strong>35–40 分</strong>。連住兩晚，行李一次到位。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="tab-panel hidden" data-panel="2">
+    <div class="space-y-5">
+      <div class="tl-line relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-mug-hot"></i></span>
+        <h3 class="font-bold text-lg">金山出發</h3>
+        <p class="text-sm text-stone-600">民宿早餐後前往八斗子 / 深澳。</p>
+      </div>
+      <div class="tl-line relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-train"></i></span>
+        <h3 class="font-bold text-lg">深澳鐵道自行車 Rail Bike</h3>
+        <p class="text-sm text-stone-600">沿海鐵道踩踏，親子最愛。</p>
+        <span class="mt-1 inline-block text-xs bg-rose-50 text-rose-700 border border-rose-200 rounded-full px-3 py-1"><i class="fa-solid fa-bell mr-1"></i> 須乘車日前 30 天預約（見必預約清單）</span>
+      </div>
+      <div class="tl-line relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-mountain-city"></i></span>
+        <h3 class="font-bold text-lg">九份老街 <span class="text-stone-400 font-normal">或</span> 十分</h3>
+        <p class="text-sm text-stone-600">建議<strong>兩者擇一深玩</strong>，避免同日連跑太趕、停車困難。</p>
+        <div class="grid sm:grid-cols-2 gap-3 mt-2">
+          <div class="bg-stone-50 border border-stone-200 rounded-xl p-3">
+            <p class="font-bold text-sm text-brand-700"><i class="fa-solid fa-lanterns mr-1"></i> 九份</p>
+            <p class="text-xs text-stone-600">山城階梯、茶樓夜景；停車較難，建議停山下轉乘或早到。</p>
+          </div>
+          <div class="bg-stone-50 border border-stone-200 rounded-xl p-3">
+            <p class="font-bold text-sm text-brand-700"><i class="fa-solid fa-fire mr-1"></i> 十分</p>
+            <p class="text-xs text-stone-600">天燈體驗、十分瀑布；適合帶小孩放天燈，步行輕鬆。</p>
+          </div>
+        </div>
+      </div>
+      <div class="tl-line relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-utensils"></i></span>
+        <h3 class="font-bold text-lg">晚餐 · 兄弟食堂</h3>
+        <p class="text-sm text-stone-600">合菜，10 人需<strong>提前訂位</strong>。</p>
+        <span class="mt-1 inline-block text-xs bg-rose-50 text-rose-700 border border-rose-200 rounded-full px-3 py-1"><i class="fa-solid fa-bell mr-1"></i> 需訂位</span>
+      </div>
+      <div class="relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-700 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-house-chimney"></i></span>
+        <h3 class="font-bold text-lg">返回金山民宿</h3>
+        <p class="text-sm text-stone-600">同一民宿第二晚，泡湯放鬆。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="tab-panel hidden" data-panel="3">
+    <div class="space-y-5">
+      <div class="tl-line relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-store"></i></span>
+        <h3 class="font-bold text-lg">金山老街</h3>
+        <p class="text-sm text-stone-600">廟口鴨肉、金山地瓜與在地小吃，悠閒採買伴手禮。</p>
+      </div>
+      <div class="tl-line relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-mug-saucer"></i></span>
+        <h3 class="font-bold text-lg">海邊咖啡 · 洋荳子 / 我們在海邊</h3>
+        <p class="text-sm text-stone-600">面海咖啡廳，看海放空收尾。</p>
+        <span class="mt-1 inline-block text-xs bg-rose-50 text-rose-700 border border-rose-200 rounded-full px-3 py-1"><i class="fa-solid fa-bell mr-1"></i>「我們在海邊」為全預約制，需提前訂</span>
+      </div>
+      <div class="relative pl-14">
+        <span class="absolute left-2 top-1 w-8 h-8 rounded-full bg-brand-700 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-flag-checkered"></i></span>
+        <h3 class="font-bold text-lg">還車賦歸</h3>
+        <p class="text-sm text-stone-600">金山返回南港還車，結束三天兩夜行程。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 必預約清單 ===== -->
+<section id="booking" class="py-10">
+  <div class="bg-gradient-to-br from-rose-600 to-red-700 rounded-3xl p-6 md:p-8 text-white shadow-xl">
+    <h2 class="text-2xl md:text-3xl font-black mb-1 flex items-center gap-2">
+      <i class="fa-solid fa-bell"></i> 必預約清單
+    </h2>
+    <p class="text-rose-100 text-sm mb-6">附時效，越早訂越保險，請一項一項打勾。</p>
+    <div class="grid md:grid-cols-2 gap-4">
+
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
+        <p class="font-bold flex items-center gap-2"><i class="fa-solid fa-train"></i> 深澳鐵道自行車</p>
+        <p class="text-sm text-rose-50 mt-1">官網 <a href="https://www.railbike.com.tw" target="_blank" class="underline font-semibold">railbike.com.tw</a>，乘車日前 30 天、每日 00:00 開賣。</p>
+        <p class="text-sm mt-2 bg-white/15 rounded-lg px-3 py-2"><i class="fa-solid fa-clock mr-1"></i> 11/13 場次約 <strong>10/14 00:00</strong> 開賣；旺日建議 0 時搶。須先加會員，單筆限 4 張，<strong>10 人需拆多筆</strong>。</p>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
+        <p class="font-bold flex items-center gap-2"><i class="fa-solid fa-house-chimney"></i> 10 人包棟民宿 + 租車 2 台</p>
+        <p class="text-sm text-rose-50 mt-1">盡早訂，皆需付訂金。詳見下方住宿區塊。</p>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
+        <p class="font-bold flex items-center gap-2"><i class="fa-solid fa-train-subway"></i> 高鐵票（若搭乘）</p>
+        <p class="text-sm text-rose-50 mt-1">早鳥優惠 <strong>28 天前</strong>開賣，越早越有折扣座位。</p>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
+        <p class="font-bold flex items-center gap-2"><i class="fa-solid fa-ticket"></i> 和平島公園門票 / 秘境導覽</p>
+        <p class="text-sm text-rose-50 mt-1">秘境地質導覽為預約制，冬季開放時間需先確認。</p>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
+        <p class="font-bold flex items-center gap-2"><i class="fa-solid fa-mug-saucer"></i> 「我們在海邊」咖啡</p>
+        <p class="text-sm text-rose-50 mt-1">全預約制，Day 3 若要前往務必提前訂。</p>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
+        <p class="font-bold flex items-center gap-2"><i class="fa-solid fa-utensils"></i> 合菜餐廳大圓桌</p>
+        <p class="text-sm text-rose-50 mt-1">海龍珠水產（D1）、兄弟食堂（D2）提前訂 10 人大圓桌。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== 住宿區塊 ===== -->
+<section id="stay" class="py-10">
+  <h2 class="text-2xl md:text-3xl font-black text-brand-800 mb-2 flex items-center gap-2">
+    <i class="fa-solid fa-bed text-brand-500"></i> 住宿空房狀態
+  </h2>
+  <p class="text-sm text-stone-500 mb-6">
+    <i class="fa-solid fa-magnifying-glass mr-1"></i> 查證日 2026/07/24，針對 11/13–15 兩晚。包棟多需電話 / LINE 詢問，越早越好。
+  </p>
+
+  <div class="grid md:grid-cols-2 gap-5">
+
+    <!-- 浪漫金山 -->
+    <div class="card-hover bg-white rounded-2xl border-2 border-emerald-200 p-5">
+      <div class="flex items-start justify-between gap-2">
+        <h3 class="font-black text-lg text-brand-800">浪漫金山</h3>
+        <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">建議優先電洽</span>
+      </div>
+      <p class="text-sm text-stone-600 mt-2">金山 · 可容 <strong>24–26 人</strong>，約 <strong>NT$29,000/晚</strong>，有溫泉 + KTV。</p>
+      <p class="text-xs text-stone-500 mt-2">無線上即時系統，需電洽（瘋台灣民宿有頁面）。</p>
+    </div>
+
+    <!-- 灰盒子 -->
+    <div class="card-hover bg-white rounded-2xl border-2 border-emerald-200 p-5">
+      <div class="flex items-start justify-between gap-2">
+        <h3 class="font-black text-lg text-brand-800">灰盒子（金山）</h3>
+        <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">建議優先電洽</span>
+      </div>
+      <p class="text-sm text-stone-600 mt-2">約可 <strong>16 人</strong>、親子友善。</p>
+      <p class="text-xs text-stone-500 mt-2">官方即時日曆查不到；可電話或上 Airbnb 查日曆。</p>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <a href="tel:0955688022" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0955-688-022</a>
+        <a href="https://www.airbnb.com/rooms/1482477167491294190" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-brands fa-airbnb mr-1"></i> Airbnb 日曆</a>
+      </div>
+    </div>
+
+    <!-- 沐舍溫泉 -->
+    <div class="card-hover bg-white rounded-2xl border-2 border-rose-200 p-5">
+      <div class="flex items-start justify-between gap-2">
+        <h3 class="font-black text-lg text-brand-800">沐舍溫泉（萬里）</h3>
+        <span class="text-xs bg-rose-100 text-rose-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">該日已滿</span>
+      </div>
+      <p class="text-sm text-stone-600 mt-2">溫泉酒店，<strong>非整棟包棟</strong>。</p>
+      <p class="text-xs text-stone-500 mt-2">11/13–15 Booking.com 即時查<strong>已顯示無空房</strong>；可電洽問其他房型。</p>
+      <a href="tel:0224082559" class="inline-block mt-3 text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 02-2408-2559</a>
+    </div>
+
+    <!-- 神隱之森 -->
+    <div class="card-hover bg-white rounded-2xl border-2 border-amber-200 p-5">
+      <div class="flex items-start justify-between gap-2">
+        <h3 class="font-black text-lg text-brand-800">神隱之森（瑞芳／九份）</h3>
+        <span class="text-xs bg-amber-100 text-amber-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">即時可訂但有限制</span>
+      </div>
+      <p class="text-sm text-stone-600 mt-2">易遊網即時查 11/13–15「本館僅剩 1 間」。</p>
+      <p class="text-xs text-stone-500 mt-2">本館限 2–7 人（10 人需再加訂另一館）；位在九份，與金山行程不同區、<strong>通勤較遠</strong>。</p>
+    </div>
+
+    <!-- 簡單生活 -->
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2">
+        <h3 class="font-black text-lg text-brand-800">簡單生活</h3>
+        <span class="text-xs bg-stone-200 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">待補資料</span>
+      </div>
+      <p class="text-sm text-stone-600 mt-2">查無明確資料。</p>
+      <p class="text-xs text-stone-500 mt-2">待補正確名稱 / 連結後再確認空房。</p>
+    </div>
+
+    <!-- 替代選項 -->
+    <div class="card-hover bg-brand-50 rounded-2xl border-2 border-brand-200 p-5">
+      <h3 class="font-black text-lg text-brand-800"><i class="fa-solid fa-shuffle mr-1"></i> 替代選項（金山合法包棟）</h3>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <span class="text-sm bg-white text-brand-700 border border-brand-200 px-3 py-1.5 rounded-lg font-semibold">名流</span>
+        <span class="text-sm bg-white text-brand-700 border border-brand-200 px-3 py-1.5 rounded-lg font-semibold">璞真</span>
+        <span class="text-sm bg-white text-brand-700 border border-brand-200 px-3 py-1.5 rounded-lg font-semibold">亞城</span>
+        <span class="text-sm bg-white text-brand-700 border border-brand-200 px-3 py-1.5 rounded-lg font-semibold">劉住春天</span>
+      </div>
+      <p class="text-xs text-stone-500 mt-3">皆為金山合法包棟，若上列額滿可備援詢問。</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== 行前準備 / checklist ===== -->
+<section id="checklist" class="py-10">
+  <div class="grid md:grid-cols-2 gap-6">
+
+    <div class="bg-white rounded-2xl border border-stone-200 p-6">
+      <h2 class="text-xl font-black text-brand-800 mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-list-check text-brand-500"></i> 行前準備 Checklist
+      </h2>
+      <ul class="space-y-3 text-sm text-stone-700">
+        <li class="flex items-start gap-2"><i class="fa-regular fa-square-check text-brand-500 mt-0.5"></i> 深澳鐵道自行車：10/14 00:00 開搶（拆多筆）</li>
+        <li class="flex items-start gap-2"><i class="fa-regular fa-square-check text-brand-500 mt-0.5"></i> 金山包棟民宿訂房 + 付訂金</li>
+        <li class="flex items-start gap-2"><i class="fa-regular fa-square-check text-brand-500 mt-0.5"></i> 租車 2 台預訂</li>
+        <li class="flex items-start gap-2"><i class="fa-regular fa-square-check text-brand-500 mt-0.5"></i> 海龍珠水產、兄弟食堂訂大圓桌</li>
+        <li class="flex items-start gap-2"><i class="fa-regular fa-square-check text-brand-500 mt-0.5"></i> 和平島公園開放時間 / 秘境導覽確認</li>
+        <li class="flex items-start gap-2"><i class="fa-regular fa-square-check text-brand-500 mt-0.5"></i>「我們在海邊」預約（若前往）</li>
+        <li class="flex items-start gap-2"><i class="fa-solid fa-wind text-brand-500 mt-0.5"></i> 防風外套、帽子（秋季東北季風、海邊風大易雨）</li>
+        <li class="flex items-start gap-2"><i class="fa-solid fa-suitcase-rolling text-brand-500 mt-0.5"></i> 連住同一民宿兩晚，免每天拉行李</li>
+      </ul>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-stone-200 p-6">
+      <h2 class="text-xl font-black text-brand-800 mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-clock text-brand-500"></i> 交通預估
+      </h2>
+      <div class="space-y-3 text-sm">
+        <div class="flex items-center justify-between bg-stone-50 rounded-lg px-4 py-3">
+          <span><i class="fa-solid fa-car-side text-brand-500 mr-2"></i>基隆 → 金山</span>
+          <span class="font-bold text-brand-700">約 35–40 分</span>
+        </div>
+        <div class="flex items-center justify-between bg-stone-50 rounded-lg px-4 py-3">
+          <span><i class="fa-solid fa-car-side text-brand-500 mr-2"></i>金山 → 深澳 / 八斗子</span>
+          <span class="font-bold text-brand-700">約 30–40 分</span>
+        </div>
+        <div class="flex items-center justify-between bg-stone-50 rounded-lg px-4 py-3">
+          <span><i class="fa-solid fa-car-side text-brand-500 mr-2"></i>深澳 → 九份 / 十分</span>
+          <span class="font-bold text-brand-700">約 20–30 分</span>
+        </div>
+      </div>
+      <p class="mt-4 text-xs bg-amber-50 text-amber-700 border border-amber-200 rounded-lg px-3 py-2">
+        <i class="fa-solid fa-triangle-exclamation mr-1"></i> 秋季東北季風，海邊風大易雨；九份 / 十分假日停車困難，建議提早出發或停山下轉乘。
+      </p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="bg-brand-900 text-brand-100 mt-8">
+  <div class="max-w-5xl mx-auto px-4 py-8 text-sm">
+    <p class="font-bold text-white mb-1"><i class="fa-solid fa-umbrella-beach mr-1"></i> 基隆北海岸三天兩夜親子包棟之旅</p>
+    <p>2026/11/13（五）– 11/15（日） · 10 人（9大1小） · 自駕 2 車 · 金山連住 2 晚</p>
+    <p class="text-brand-300 text-xs mt-3">住宿空房查證日 2026/07/24。包棟與餐廳資訊以現場 / 電話最新回覆為準，出發前請再次確認。</p>
+  </div>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+  tabs.forEach(btn => btn.addEventListener('click', () => {
+    const id = btn.dataset.tab;
+    tabs.forEach(b => { b.classList.remove('tab-active'); b.classList.add('text-stone-600'); });
+    btn.classList.add('tab-active'); btn.classList.remove('text-stone-600');
+    panels.forEach(p => {
+      if (p.dataset.panel === id) { p.classList.remove('hidden'); p.classList.add('fade-in'); }
+      else { p.classList.add('hidden'); p.classList.remove('fade-in'); }
+    });
+  }));
+</script>
+</body>
+</html>
