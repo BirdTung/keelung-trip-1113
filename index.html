@@ -6,6 +6,7 @@
 <title>基隆北海岸三天兩夜親子包棟之旅 · 2026/11/13–15</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <script>
@@ -51,10 +52,11 @@
       <a href="#overview" class="hover:text-brand-600">總覽</a>
       <a href="#itinerary" class="hover:text-brand-600">行程</a>
       <a href="#booking" class="hover:text-brand-600">必預約</a>
+      <a href="#map" class="hover:text-brand-600">地圖</a>
       <a href="#stay" class="hover:text-brand-600">住宿</a>
       <a href="#checklist" class="hover:text-brand-600">行前準備</a>
     </div>
-    <a href="#booking" class="md:hidden text-brand-700 text-sm font-bold"><i class="fa-solid fa-bell"></i> 必預約</a>
+    <a href="#map" class="md:hidden text-brand-700 text-sm font-bold"><i class="fa-solid fa-map-pin"></i> 地圖</a>
   </div>
 </nav>
 
@@ -332,83 +334,453 @@
   </div>
 </section>
 
+<!-- ===== 地圖：民宿與景點位置 ===== -->
+<section id="map" class="py-10">
+  <h2 class="text-2xl md:text-3xl font-black text-brand-800 mb-2 flex items-center gap-2">
+    <i class="fa-solid fa-map-pin text-brand-500"></i> 候選民宿與景點地圖
+  </h2>
+  <p class="text-sm text-stone-500 mb-4">
+    6 間候選民宿（圓形，<strong class="text-brand-700">編號 1–6</strong>）與行程主要景點（方形，依天數上色）。點擊圖示看詳情，可縮放與拖曳。<br>
+    <i class="fa-solid fa-arrow-turn-down mr-1"></i> <strong class="text-brand-700">同一組編號也標在下方的房價總覽表與車程表上</strong>，可對照查看。
+  </p>
+
+  <div id="tripmap" class="rounded-2xl border-2 border-stone-200 overflow-hidden" style="height:460px"></div>
+
+  <div class="flex flex-wrap gap-3 mt-3 text-xs">
+    <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-amber-500 border-2 border-white ring-1 ring-stone-300 inline-block"></span>首選民宿</span>
+    <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-teal-600 border-2 border-white ring-1 ring-stone-300 inline-block"></span>其他候選民宿</span>
+    <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-sm bg-rose-500 border-2 border-white ring-1 ring-stone-300 inline-block"></span>D1 基隆・和平島</span>
+    <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-sm bg-violet-600 border-2 border-white ring-1 ring-stone-300 inline-block"></span>D2 深澳・九份・十分</span>
+    <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-sm bg-sky-600 border-2 border-white ring-1 ring-stone-300 inline-block"></span>D3 金山</span>
+  </div>
+
+  <!-- 車程分析 -->
+  <div class="bg-white rounded-2xl border-2 border-brand-200 p-4 md:p-5 mt-6">
+    <h3 class="font-black text-lg text-brand-800 mb-1"><i class="fa-solid fa-route mr-1"></i> 各民宿到行程景點的推估車程</h3>
+    <p class="text-xs text-stone-500 mb-4">由座標直線距離 ×1.35 繞路係數、以北海岸山路均速 38 km/h 推估的<strong>單程</strong>時間，供相對比較用，非實際導航結果。</p>
+    <div class="overflow-x-auto -mx-1 px-1">
+      <table class="w-full text-sm border-collapse min-w-[700px]">
+        <thead>
+          <tr class="bg-brand-50 text-brand-800">
+            <th class="text-left font-bold px-3 py-2 rounded-l-lg">民宿</th>
+            <th class="text-right font-bold px-2 py-2">D1 和平島</th>
+            <th class="text-right font-bold px-2 py-2">D2 深澳</th>
+            <th class="text-right font-bold px-2 py-2">D2 九份</th>
+            <th class="text-right font-bold px-2 py-2">D3 金山老街</th>
+            <th class="text-right font-bold px-3 py-2 rounded-r-lg">總負擔</th>
+          </tr>
+        </thead>
+        <tbody class="tabular-nums">
+          <tr class="border-b border-stone-100 bg-emerald-50/50">
+            <td class="px-3 py-2 font-semibold"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">6</span>九份山嶼海 <span class="text-[11px] text-stone-500 block font-normal">瑞芳</span></td>
+            <td class="text-right px-2 py-2">22 分</td><td class="text-right px-2 py-2">11 分</td>
+            <td class="text-right px-2 py-2 text-emerald-700 font-bold">1 分</td><td class="text-right px-2 py-2 text-rose-600">51 分</td>
+            <td class="text-right px-3 py-2 font-black text-emerald-700">最低</td>
+          </tr>
+          <tr class="border-b border-stone-100 bg-emerald-50/50">
+            <td class="px-3 py-2 font-semibold"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">3</span>萬里海景別墅 <span class="text-[11px] text-stone-500 block font-normal">萬里（概略位置）</span></td>
+            <td class="text-right px-2 py-2">18 分</td><td class="text-right px-2 py-2">29 分</td>
+            <td class="text-right px-2 py-2">40 分</td><td class="text-right px-2 py-2">12 分</td>
+            <td class="text-right px-3 py-2 font-black text-emerald-700">次低 · 最平衡</td>
+          </tr>
+          <tr class="border-b border-stone-100 bg-amber-50/60">
+            <td class="px-3 py-2 font-semibold"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-500 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">1</span>浪漫金山 <span class="text-[11px] text-stone-500 block font-normal">金山・環金路</span></td>
+            <td class="text-right px-2 py-2">30 分</td><td class="text-right px-2 py-2">41 分</td>
+            <td class="text-right px-2 py-2">52 分</td><td class="text-right px-2 py-2 text-emerald-700 font-bold">1 分</td>
+            <td class="text-right px-3 py-2 font-bold text-stone-600">中等</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2 font-semibold"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-500 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">2</span>浪漫萬里 <span class="text-[11px] text-stone-500 block font-normal">萬里・公館崙</span></td>
+            <td class="text-right px-2 py-2">31 分</td><td class="text-right px-2 py-2">41 分</td>
+            <td class="text-right px-2 py-2">51 分</td><td class="text-right px-2 py-2">4 分</td>
+            <td class="text-right px-3 py-2 font-bold text-stone-600">中等</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2 font-semibold"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">5</span>璞真民宿 <span class="text-[11px] text-stone-500 block font-normal">金山・頂六股</span></td>
+            <td class="text-right px-2 py-2">35 分</td><td class="text-right px-2 py-2">45 分</td>
+            <td class="text-right px-2 py-2">56 分</td><td class="text-right px-2 py-2">5 分</td>
+            <td class="text-right px-3 py-2 font-bold text-stone-600">中等</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2 font-semibold"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">4</span>劉住春天 <span class="text-[11px] text-stone-500 block font-normal">金山・名流路</span></td>
+            <td class="text-right px-2 py-2">36 分</td><td class="text-right px-2 py-2">46 分</td>
+            <td class="text-right px-2 py-2">57 分</td><td class="text-right px-2 py-2">10 分</td>
+            <td class="text-right px-3 py-2 font-bold text-stone-600">偏高</td>
+          </tr>
+                  </tbody>
+      </table>
+    </div>
+
+    <div class="mt-4 space-y-2">
+      <p class="text-xs text-stone-600 bg-stone-100 rounded-lg px-3 py-2"><i class="fa-solid fa-circle-check mr-1"></i> <strong>已剔除「北海岸愛之船（石門）」</strong>：它在北海岸最西端，行程主軸（基隆、和平島、深澳、九份）卻全在東邊，光是 D2 到九份就要 75 分鐘單程，來回多花 2.5 小時在車上。</p>
+      <p class="text-xs text-amber-800 bg-amber-50 rounded-lg px-3 py-2"><i class="fa-solid fa-triangle-exclamation mr-1"></i> <strong>金山那四間（浪漫金山、浪漫萬里、璞真、劉住春天）都有同一個結構問題</strong>：D3 金山老街只要 1–10 分鐘很方便，但 <strong>D1 和平島要 30–36 分、D2 九份要 51–57 分</strong>。前兩天等於每天來回多花 1–2 小時。這是原行程「住金山、玩基隆瑞芳」先天就有的取捨，不是哪一間特別差。</p>
+      <p class="text-xs text-emerald-800 bg-emerald-50 rounded-lg px-3 py-2"><i class="fa-solid fa-lightbulb mr-1"></i> <strong>若以「車程總負擔」為唯一標準，九份山嶼海最省</strong>（D1 22 分、D2 深澳 11 分、九份 1 分——它就在九份老街旁）。代價是 D3 金山老街要 51 分。但 D3 是最後一天、行程最鬆，也可以改成「九份出發 → 沿台2線玩到金山 → 直接南下還車」，反而順路不繞。</p>
+      <p class="text-xs text-stone-600 bg-stone-100 rounded-lg px-3 py-2"><i class="fa-solid fa-scale-balanced mr-1"></i> <strong>最平衡的是萬里海景別墅</strong>（18–40 分區間，沒有任何一段超過 40 分）。但它沒有乾濕分離、乾淨度評價偏低（3.8），要自己權衡。</p>
+    </div>
+  </div>
+</section>
+
 <!-- ===== 住宿區塊 ===== -->
 <section id="stay" class="py-10">
   <h2 class="text-2xl md:text-3xl font-black text-brand-800 mb-2 flex items-center gap-2">
     <i class="fa-solid fa-bed text-brand-500"></i> 住宿空房狀態
   </h2>
-  <p class="text-sm text-stone-500 mb-6">
-    <i class="fa-solid fa-magnifying-glass mr-1"></i> 查證日 2026/07/24，針對 11/13–15 兩晚。包棟多需電話 / LINE 詢問，越早越好。
+  <p class="text-sm text-stone-500 mb-3">
+    <i class="fa-solid fa-magnifying-glass mr-1"></i> 查證日 <strong class="text-brand-700">2026/08/10</strong>，針對 11/13（五）、11/14（六）兩晚連住。有線上系統者以官方日曆逐日驗證；其餘一律以電話 / LINE 回覆為準。
   </p>
+  <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4 mb-6 text-sm text-stone-700">
+    <p class="font-bold text-amber-800 mb-1"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 這次查證的重點結論</p>
+    <p class="leading-relaxed">能線上驗證的房源中，<strong>11/14（週六）那晚幾乎都已被訂走</strong>（灰盒子、神隱之森、W&amp;W 葳葦、陽明山紅糖彩居皆是）。剩下四間各有取捨：<strong class="text-amber-900">浪漫金山是唯一「卡拉OK＋乾濕分離」兩項全中的</strong>（Google 4.9★、最新住客說設備都很新），但空房要電話確認；<strong>劉住春天與萬里海景</strong>空房已由 Airbnb 日曆確認，<strong>但兩間都沒有乾濕分離</strong>。</p>
+    <p class="text-xs text-amber-800/80 mt-2 pt-2 border-t border-amber-200">本頁只保留<strong>能線上查證空房</strong>的選項，另加上你指定保留的浪漫金山（設施最完整）。已移除：金山財神景觀（無麻將／KTV）、亞城（不考慮）、名流（官網消失、線上無從查空房）、旅途中海邊（月曆為展示型、10 人包棟價未公開）。</p>
+    <p class="text-xs text-amber-900 bg-amber-100 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-shower mr-1"></i> <strong>若「卡拉OK＋乾濕分離」是必要條件，四間裡只有浪漫金山同時滿足</strong>（劉住春天、璞真、萬里海景皆無乾濕分離）。另為此再找的兩間新候選查證後亦不建議，詳見本區最下方。</p>
+  </div>
+
+  <!-- 房價總覽比較表 -->
+  <div class="bg-white rounded-2xl border-2 border-brand-200 p-4 md:p-5 mb-6">
+    <h3 class="font-black text-lg text-brand-800 mb-1"><i class="fa-solid fa-calculator mr-1"></i> 兩晚房價總覽</h3>
+    <p class="text-xs text-stone-500 mb-4">
+      11/13（五）+ 11/14（六）· 10 人（9 大 1 小）· 依兩晚總價由低到高排序<br class="md:hidden">
+      <span class="text-brand-600"><i class="fa-solid fa-hand-pointer mr-1"></i>民宿名稱可點開官網／房源；<i class="fa-solid fa-phone mx-1"></i>可直接撥號，<i class="fa-brands fa-airbnb mx-1"></i>為 Airbnb 房源</span>
+    </p>
+    <div class="overflow-x-auto -mx-1 px-1">
+      <table class="w-full text-sm border-collapse min-w-[820px]">
+        <thead>
+          <tr class="bg-brand-50 text-brand-800">
+            <th class="text-left font-bold px-3 py-2 rounded-l-lg">民宿</th>
+            <th class="text-left font-bold px-2 py-2">地區</th>
+            <th class="text-center font-bold px-2 py-2">空房</th>
+            <th class="text-center font-bold px-2 py-2">娛樂</th>
+            <th class="text-center font-bold px-2 py-2">乾濕分離</th>
+            <th class="text-right font-bold px-3 py-2">11/13（五）</th>
+            <th class="text-right font-bold px-3 py-2">11/14（六）</th>
+            <th class="text-right font-bold px-3 py-2">兩晚總計</th>
+            <th class="text-right font-bold px-3 py-2 rounded-r-lg">每人約</th>
+          </tr>
+        </thead>
+        <tbody class="tabular-nums">
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">3</span><a href="https://www.airbnb.com/rooms/50759839" target="_blank" rel="noopener" class="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-2 hover:text-brand-500">萬里海景包棟別墅</a>
+              <a href="https://www.airbnb.com/rooms/50759839" target="_blank" rel="noopener" title="Airbnb 房源" class="ml-1 text-stone-400 hover:text-rose-500"><i class="fa-brands fa-airbnb"></i></a>
+            </td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">萬里</td>
+            <td class="text-center px-2 py-2 text-emerald-600 font-bold">✓</td>
+            <td class="text-center px-2 py-2">🀄🎤</td>
+            <td class="text-center px-2 py-2 text-rose-500 font-bold" title="3 間全套衛浴，但無乾濕分離">✗</td>
+            <td class="text-right px-3 py-2 text-stone-400" colspan="2">Airbnb 兩晚合併報價（含連住 8 折）</td>
+            <td class="text-right px-3 py-2 font-black text-brand-700">33,873</td>
+            <td class="text-right px-3 py-2 text-stone-600">3,387</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">4</span><a href="https://www.staythespring.com.tw/about-jinshan-bnb" target="_blank" rel="noopener" class="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-2 hover:text-brand-500">劉住春天</a>
+              <a href="tel:0933748592" title="撥打 0933-748-592" class="ml-1 text-stone-400 hover:text-brand-600"><i class="fa-solid fa-phone"></i></a>
+              <a href="https://www.airbnb.com/rooms/26148235" target="_blank" rel="noopener" title="Airbnb 房源（比直訂貴約 4,900）" class="ml-1 text-stone-400 hover:text-rose-500"><i class="fa-brands fa-airbnb"></i></a>
+            </td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">金山<span class="text-[11px] text-stone-400 block">天籟後方</span></td>
+            <td class="text-center px-2 py-2 text-emerald-600 font-bold">✓</td>
+            <td class="text-center px-2 py-2">🀄🎤</td>
+            <td class="text-center px-2 py-2 text-rose-500 font-bold" title="住客評價明指「廁所沒有乾濕分離」">✗</td>
+            <td class="text-right px-3 py-2">18,000</td>
+            <td class="text-right px-3 py-2">26,000</td>
+            <td class="text-right px-3 py-2 font-black text-brand-700">44,000</td>
+            <td class="text-right px-3 py-2 text-stone-600">4,400</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">5</span><a href="https://puzhen.ego.tw/" target="_blank" rel="noopener" class="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-2 hover:text-brand-500">璞真民宿</a>
+              <a href="tel:0915616786" title="撥打 0915-616-786" class="ml-1 text-stone-400 hover:text-brand-600"><i class="fa-solid fa-phone"></i></a>
+            </td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">金山<span class="text-[11px] text-stone-400 block">頂六股</span></td>
+            <td class="text-center px-2 py-2 text-emerald-600 font-bold">✓</td>
+            <td class="text-center px-2 py-2 text-rose-500 font-bold" title="無麻將、無卡拉OK">✗</td>
+            <td class="text-center px-2 py-2 text-rose-500 font-bold">✗</td>
+            <td class="text-right px-3 py-2">21,000</td>
+            <td class="text-right px-3 py-2">24,000–28,000</td>
+            <td class="text-right px-3 py-2 font-black text-brand-700">45,000–49,000</td>
+            <td class="text-right px-3 py-2 text-stone-600">4,500–4,900</td>
+          </tr>
+          <tr class="border-b border-stone-100 bg-sky-50/50">
+            <td class="px-3 py-2">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">6</span><a href="https://www.jiufenshanyuhai.com/" target="_blank" rel="noopener" class="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-2 hover:text-brand-500">九份山嶼海</a>
+              <span class="text-xs bg-emerald-600 text-white px-1.5 py-0.5 rounded font-bold ml-1">新</span>
+              <a href="tel:0907862266" title="撥打 0907-862266" class="ml-1 text-stone-400 hover:text-brand-600"><i class="fa-solid fa-phone"></i></a>
+              <a href="https://booking.owlting.com/shanyuhaiqinziminsu" target="_blank" rel="noopener" title="奧丁丁訂房（可線上下訂）" class="ml-1 text-stone-400 hover:text-emerald-600"><i class="fa-solid fa-calendar-check"></i></a>
+            </td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">瑞芳<span class="text-[11px] text-stone-400 block">九份汽車路</span></td>
+            <td class="text-center px-2 py-2 text-emerald-600 font-bold">✓</td>
+            <td class="text-center px-2 py-2" title="官網直述「專屬 KTV」">🎤</td>
+            <td class="text-center px-2 py-2 text-rose-500 font-bold" title="浴缸，無乾濕分離">✗</td>
+            <td class="text-right px-3 py-2">18,600</td>
+            <td class="text-right px-3 py-2">20,400</td>
+            <td class="text-right px-3 py-2 font-black text-brand-700">39,000</td>
+            <td class="text-right px-3 py-2 text-stone-600">3,900</td>
+          </tr>
+                    <tr class="border-b border-stone-100 bg-amber-50/30">
+            <td class="px-3 py-2">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-500 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">2</span><a href="https://www.facebook.com/RomanticWanli" target="_blank" rel="noopener" class="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-2 hover:text-brand-500">浪漫萬里</a>
+              <span class="text-xs bg-sky-500 text-white px-1.5 py-0.5 rounded font-bold ml-1">姊妹館</span>
+              <a href="tel:0930566064" title="撥打 0930-566-064（與浪漫金山同一支）" class="ml-1 text-stone-400 hover:text-brand-600"><i class="fa-solid fa-phone"></i></a>
+            </td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">萬里<span class="text-[11px] text-stone-400 block">公館崙</span></td>
+            <td class="text-center px-2 py-2 text-amber-600 font-bold">?</td>
+            <td class="text-center px-2 py-2" title="KTV 僅有業者 FB 相簿照片佐證（點歌機＋麥克風＋喇叭），無文字直述">🎤<span class="text-[11px] text-stone-400 block">照片佐證</span></td>
+            <td class="text-center px-2 py-2 text-emerald-600 font-bold">✓</td>
+            <td class="text-right px-3 py-2 text-stone-400" colspan="2">登記價 8,800 起／晚（未分平假日）</td>
+            <td class="text-right px-3 py-2 font-bold text-stone-600">需洽詢</td>
+            <td class="text-right px-3 py-2 text-stone-500">—</td>
+          </tr>
+          <tr class="border-b border-stone-100 bg-amber-50/60">
+            <td class="px-3 py-2">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-500 text-white text-[11px] font-black mr-1.5 align-middle shrink-0">1</span><a href="https://m.fun-taiwan.com/minsu.aspx?id=006-348" target="_blank" rel="noopener" class="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-2 hover:text-brand-500">浪漫金山</a>
+              <span class="text-xs bg-amber-400 text-white px-1.5 py-0.5 rounded font-bold ml-1">首選</span>
+              <a href="tel:0930566064" title="撥打 0930-566-064" class="ml-1 text-stone-400 hover:text-brand-600"><i class="fa-solid fa-phone"></i></a>
+            </td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">金山<span class="text-[11px] text-stone-400 block">環金路</span></td>
+            <td class="text-center px-2 py-2 text-amber-600 font-bold">?</td>
+            <td class="text-center px-2 py-2">🀄🎤</td>
+            <td class="text-center px-2 py-2 text-emerald-600 font-bold">✓</td>
+            <td class="text-right px-3 py-2">29,000</td>
+            <td class="text-right px-3 py-2">29,000</td>
+            <td class="text-right px-3 py-2 font-black text-brand-700">58,000</td>
+            <td class="text-right px-3 py-2 text-stone-600">5,800</td>
+          </tr>
+          <tr class="text-stone-400">
+            <td class="px-3 py-2 text-xs">
+              <a href="https://www.airbnb.com/rooms/1482477167491294190" target="_blank" rel="noopener" class="line-through hover:text-rose-500 underline decoration-stone-300 underline-offset-2">灰盒子</a>／<a href="https://booking.owlting.com/%E7%A5%9E%E9%9A%B1%E4%B9%8B%E6%A3%AE" target="_blank" rel="noopener" class="line-through hover:text-rose-500 underline decoration-stone-300 underline-offset-2">神隱之森</a>／<a href="https://www.airbnb.com/rooms/7509302" target="_blank" rel="noopener" class="line-through hover:text-rose-500 underline decoration-stone-300 underline-offset-2">葳葦</a>／<a href="https://www.airbnb.com/rooms/1192521747925423006" target="_blank" rel="noopener" class="line-through hover:text-rose-500 underline decoration-stone-300 underline-offset-2">紅糖彩居</a>
+            </td>
+            <td class="px-2 py-2 whitespace-nowrap text-xs">金山／九份</td>
+            <td class="text-center px-2 py-2 text-rose-500 font-bold">✗</td>
+            <td class="text-center px-2 py-2">—</td>
+            <td class="text-center px-2 py-2">—</td>
+            <td class="text-right px-3 py-2" colspan="2">11/14 已被訂走</td>
+            <td class="text-right px-3 py-2 font-bold">不適用</td>
+            <td class="text-right px-3 py-2">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs text-stone-500 mt-3 leading-relaxed">
+      <i class="fa-solid fa-circle-info mr-1"></i>
+      Airbnb 房源為<strong>系統實際報價</strong>（已含服務費、可線上下訂）；其餘為<strong>官網或訂房站公開牌價推算</strong>，實際以民宿回覆為準。
+      各家平日／假日定義不同，本表已逐家對照：劉住春天「平日＝週日～週五、假日＝週六」、璞真「旺日＝週五、假日＝週六」，故 11/13（五）兩家分屬不同級距。
+      每人金額為兩晚總計 ÷ 10 人。
+    </p>
+  </div>
 
   <div class="grid md:grid-cols-2 gap-5">
 
-    <!-- 浪漫金山 -->
-    <div class="card-hover bg-white rounded-2xl border-2 border-emerald-200 p-5">
-      <div class="flex items-start justify-between gap-2">
-        <h3 class="font-black text-lg text-brand-800">浪漫金山</h3>
-        <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">建議優先電洽</span>
+    <!-- 浪漫金山 · 首選 -->
+    <div class="card-hover bg-white rounded-2xl border-2 border-amber-400 p-5 md:col-span-2 ring-2 ring-amber-100">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800"><span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-500 text-white text-xs font-black mr-2 align-middle shrink-0">1</span><i class="fa-solid fa-crown text-amber-500 mr-1"></i> 浪漫金山</h3>
+        <span class="text-xs bg-amber-500 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap">首選 · 唯一 KTV＋乾濕分離</span>
       </div>
-      <p class="text-sm text-stone-600 mt-2">金山 · 可容 <strong>24–26 人</strong>，約 <strong>NT$29,000/晚</strong>，有溫泉 + KTV。</p>
-      <p class="text-xs text-stone-500 mt-2">無線上即時系統，需電洽（瘋台灣民宿有頁面）。</p>
-    </div>
-
-    <!-- 灰盒子 -->
-    <div class="card-hover bg-white rounded-2xl border-2 border-emerald-200 p-5">
-      <div class="flex items-start justify-between gap-2">
-        <h3 class="font-black text-lg text-brand-800">灰盒子（金山）</h3>
-        <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">建議優先電洽</span>
-      </div>
-      <p class="text-sm text-stone-600 mt-2">約可 <strong>16 人</strong>、親子友善。</p>
-      <p class="text-xs text-stone-500 mt-2">官方即時日曆查不到；可電話或上 Airbnb 查日曆。</p>
+      <p class="text-xs text-amber-800 bg-amber-50 rounded-lg px-3 py-2 mt-3"><i class="fa-solid fa-crown mr-1"></i> <strong>為何列為首選</strong>：清單中<strong>唯一同時具備卡拉OK 與衛浴乾濕分離</strong>，且 Google 4.9★ 為最高分、兩週前住客證言「設備都很新」。唯一未知是空房，一通電話即可確認。</p>
       <div class="flex flex-wrap gap-2 mt-3">
-        <a href="tel:0955688022" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0955-688-022</a>
-        <a href="https://www.airbnb.com/rooms/1482477167491294190" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-brands fa-airbnb mr-1"></i> Airbnb 日曆</a>
+        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-semibold">🀄 實木麻將桌</span>
+        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-semibold">🎤 22吋觸控KTV</span>
+        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-semibold">♨️ 雙私人湯屋</span>
+        <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-1 rounded-lg font-bold">🚿 衛浴乾濕分離</span>
       </div>
-    </div>
+      <p class="text-sm text-stone-600 mt-3">五湖里環金路 147 號 · 可容 <strong>24–26 人</strong>，平假日同價 <strong>NT$29,000/晚</strong>。<strong class="text-emerald-700">Google 4.9★（87 則評論）</strong>，為本清單評分最高。</p>
+      <p class="text-xs text-stone-500 mt-2">另有開放式廚房 + 中島、專屬烤肉區、戶外戲水池、二樓親子滑梯。<strong>近金山老街，路口即 7-11 環金門市</strong>。無線上系統，11/13–15 需電洽。</p>
 
-    <!-- 神隱之森 -->
-    <div class="card-hover bg-white rounded-2xl border-2 border-amber-200 p-5">
-      <div class="flex items-start justify-between gap-2">
-        <h3 class="font-black text-lg text-brand-800">神隱之森（瑞芳／九份）</h3>
-        <span class="text-xs bg-amber-100 text-amber-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">即時可訂但有限制</span>
+      <div class="mt-3 bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4">
+        <p class="font-black text-emerald-800 text-sm"><i class="fa-solid fa-star mr-1"></i> Google 評價查證（4.9★ / 87 則）</p>
+        <ul class="text-xs text-stone-600 mt-2 space-y-1 list-disc list-inside leading-relaxed">
+          <li><strong>2 週前</strong>（在地嚮導）：「一樓客廳夠大餐廳夠大舒適，各房間也超好的…<strong>設備都很新</strong>。有小朋友的戲水池，還有 2 個溫泉湯屋。環境很美清靜」</li>
+          <li><strong>3 個月前</strong>：「老中青三代都很滿意，小孩獨鍾山泉水戲水池，老人家對花園、湯屋跟泡腳池很滿意，<strong>夾心餅乾這代對 KTV 紓壓很有感</strong>」</li>
+          <li><strong>6 個月前</strong>：「民宿是<strong>老宅翻修</strong>，維護的很乾淨，今年的家族旅遊 來包棟玩」</li>
+          <li>評論熱門標籤：空間 26 次、小孩 25 次、舒適 20 次、<strong>唱歌 19 次</strong></li>
+          <li><strong>業主每則評論都親自回覆</strong>，相片最新更新為 19 天前 — 積極經營中</li>
+        </ul>
+        <p class="text-xs text-emerald-800 bg-emerald-100 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-circle-check mr-1"></i> <strong>與劉住春天的關鍵差異</strong>：兩週前的住客說「設備都很新」，而劉住春天的低分評價說「寢具、家具頗有歷史」「電視 3 年前壞了不肯換」。<strong>屋況維護是這兩間最大的分野。</strong></p>
+        <p class="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-circle-info mr-1"></i> 唯一被提到的建議：「<strong>建議提供腳踏車或電動機車，方便購物</strong>」— 代表徒步採買不便，不過你們自駕 2 車，影響有限。</p>
       </div>
-      <p class="text-sm text-stone-600 mt-2">易遊網即時查 11/13–15「本館僅剩 1 間」。</p>
-      <p class="text-xs text-stone-500 mt-2">本館限 2–7 人（10 人需再加訂另一館）；位在九份，與金山行程不同區、<strong>通勤較遠</strong>。</p>
-    </div>
 
-    <!-- 簡單生活 -->
-    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
-      <div class="flex items-start justify-between gap-2">
-        <h3 class="font-black text-lg text-brand-800">簡單生活</h3>
-        <span class="text-xs bg-stone-200 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">待補資料</span>
+      <div class="mt-3 bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5">
+        <div class="flex items-baseline justify-between gap-2 text-xs text-stone-600 tabular-nums"><span>11/13（五）</span><span class="font-semibold">NT$29,000</span></div>
+        <div class="flex items-baseline justify-between gap-2 text-xs text-stone-600 tabular-nums mt-0.5"><span>11/14（六）</span><span class="font-semibold">NT$29,000</span></div>
+        <div class="flex items-baseline justify-between gap-2 mt-1.5 pt-1.5 border-t border-brand-200 tabular-nums">
+          <span class="text-sm font-bold text-brand-800">兩晚總計</span>
+          <span class="text-xl font-black text-brand-700">NT$58,000</span>
+        </div>
+        <p class="text-[11px] text-stone-500 mt-1 text-right">10 人均分約 NT$5,800／人</p>
       </div>
-      <p class="text-sm text-stone-600 mt-2">查無明確資料。</p>
-      <p class="text-xs text-stone-500 mt-2">待補正確名稱 / 連結後再確認空房。</p>
-    </div>
-
-    <!-- 名流民宿 -->
-    <div class="card-hover bg-white rounded-2xl border-2 border-emerald-200 p-5">
-      <div class="flex items-start justify-between gap-2">
-        <h3 class="font-black text-lg text-brand-800">名流民宿（金山）</h3>
-        <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">整棟包棟 · 需電洽</span>
-      </div>
-      <p class="text-sm text-stone-600 mt-2">金山名流路 · 3 層樓整棟包棟，<strong>標準約 17 人</strong>（含湯屋、烤肉區、戶外草皮）。</p>
-      <p class="text-xs text-stone-500 mt-2">整棟一晚約 <strong>平日 NT$15,000／週五、日 NT$18,000／假日 NT$22,000 起</strong>。無線上即時系統，11/13–15 需電話確認空房。距金山市區約 5–10 分鐘。</p>
+      <p class="text-[11px] text-stone-500 mt-1.5"><i class="fa-solid fa-circle-info mr-1"></i> 本表最貴，但可容 24–26 人；若日後加人同行，均攤後反而最划算。價格為瘋台灣公開牌價，須向民宿確認。</p>
       <div class="flex flex-wrap gap-2 mt-3">
-        <a href="tel:0938585966" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0938-585-966</a>
-        <a href="https://minliu.okgo.tw/" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-globe mr-1"></i> 官網</a>
+        <a href="tel:0930566064" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0930-566-064</a>
+        <a href="https://m.fun-taiwan.com/minsu.aspx?id=006-348" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-globe mr-1"></i> 瘋台灣頁面</a>
       </div>
     </div>
+
+
+    <!-- 浪漫萬里 · 姊妹館 -->
+    <div class="card-hover bg-white rounded-2xl border-2 border-sky-300 p-5 md:col-span-2">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800"><span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-500 text-white text-xs font-black mr-2 align-middle shrink-0">2</span><i class="fa-solid fa-people-arrows text-sky-500 mr-1"></i> 浪漫萬里民宿 Romantic_Wanli</h3>
+        <span class="text-xs bg-sky-500 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap">首選的姊妹館 · 同一支電話</span>
+      </div>
+      <p class="text-xs text-sky-800 bg-sky-50 rounded-lg px-3 py-2 mt-3"><i class="fa-solid fa-lightbulb mr-1"></i> <strong>查證時的意外發現</strong>：這間與首選「浪漫金山」是<strong>同一個經營者的兩間民宿</strong>——Google 商家名稱格式一致（Romantic_Jinshan／Romantic_Wanli），<strong>電話同為 0930-566-064</strong>。也就是說<strong>打一通電話可以同時問兩間</strong>，浪漫金山若已被訂走，這裡是現成的備案。</p>
+      <p class="text-sm text-stone-600 mt-3">萬里區磺潭里公館崙 58 號（合法民宿 407 號）· 包棟制、一天僅接待一組，登記 <strong>5 間房</strong>。近金山財神廟與亮山川農場。</p>
+      <p class="text-xs text-stone-500 mt-2"><strong class="text-emerald-700">Google 5.0★（36 則評論）</strong>，最新評論 1 個月前、相片 14 天前更新、<strong>業主每則評論都親自回覆</strong>（與浪漫金山同樣的經營風格）。</p>
+      <ul class="text-xs text-stone-600 mt-2 space-y-1 list-disc list-inside leading-relaxed">
+        <li>3 個月前：「房間客廳非常寬敞乾淨 <strong>新穎</strong>」</li>
+        <li>1 個月前：「私人及公共空間寬敞，<strong>設備多樣且新穎乾淨</strong>，屋主親切」</li>
+        <li>另有評論提到<strong>免治馬桶</strong>；有住客是「幸運的來當<strong>第一組客人開箱</strong>」— 屋齡很新</li>
+      </ul>
+      <div class="mt-3 bg-stone-50 border border-stone-200 rounded-xl px-3 py-2.5">
+        <div class="flex items-baseline justify-between gap-2 text-xs text-stone-600 tabular-nums"><span>官方登記包棟價</span><span class="font-semibold">NT$8,800 起／晚</span></div>
+        <div class="flex items-baseline justify-between gap-2 mt-1.5 pt-1.5 border-t border-stone-300 tabular-nums">
+          <span class="text-sm font-bold text-stone-700">兩晚總計</span>
+          <span class="text-lg font-black text-stone-600">需洽詢</span>
+        </div>
+      </div>
+      <p class="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-triangle-exclamation mr-1"></i> <strong>三件事必須電話問清楚</strong>：① <strong>5 間房睡不睡得下 10 人</strong>（官方未公開各房人數）；② <strong>衛浴是否乾濕分離</strong>（查無任何佐證）；③ 8,800 是旅宿網登記的最低價、<strong>未分平假日</strong>，週五六實際報價很可能更高。另註：旅宿網載明<strong>不提供一次性備品，需自備</strong>盥洗用具。</p>
+      <p class="text-xs text-emerald-800 bg-emerald-50 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-shower mr-1"></i> <strong>衛浴有乾濕分離</strong>（已確認）— 與浪漫金山同為清單中僅有的兩間，而且兩間是同一個經營者。</p>
+      <p class="text-xs text-stone-500 mt-2"><i class="fa-solid fa-camera mr-1"></i> KTV 佐證強度：業者 FB「1 樓大廳」相簿照片可見<strong>觸控點歌機、兩支麥克風、落地喇叭與播放 MV 的大電視</strong>，但<strong>無文字直述</strong>，Google 評論也未提及唱歌（對比浪漫金山有「唱歌」標籤 19 次）。電洽時可順帶確認。</p>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <a href="tel:0930566064" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0930-566-064（09:00–23:00）</a>
+        <a href="https://www.facebook.com/RomanticWanli" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-brands fa-facebook mr-1"></i> FB 粉專（唯一訂房管道）</a>
+        <a href="https://newtaipei.travel/zh-tw/accommodation/detail/404365" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-globe mr-1"></i> 新北觀旅網</a>
+      </div>
+    </div>
+
+
+    <!-- 萬里海景包棟別墅 -->
+    <div class="card-hover bg-white rounded-2xl border-2 border-emerald-300 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800"><span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-teal-600 text-white text-xs font-black mr-2 align-middle shrink-0">3</span>萬里海景包棟別墅</h3>
+        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap">✓ 有空房 · 最便宜</span>
+      </div>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-semibold">🀄 麻將</span>
+        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-semibold">🎤 KTV（麥克風多支）</span>
+        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-semibold">🌊 屋頂海景烤肉</span>
+        <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-2 py-1 rounded-lg font-semibold">🚿 3 間全套衛浴 · 無乾濕分離</span>
+      </div>
+      <p class="text-sm text-stone-600 mt-3">萬里區 · 4 間臥室。<strong>3 間全套衛浴（含浴缸／淋浴＋馬桶）</strong>，但<strong class="text-amber-700">不算乾濕分離</strong>。超讚房東、4.48★（33 則評價）。</p>
+      <p class="text-xs text-stone-500 mt-2">距萬里沙灘 3 分、野柳 5 分、金山老街 10 分、基隆夜市 15 分車程。<strong class="text-emerald-700">Airbnb 日曆確認 11/13、11/14 皆可訂</strong>，10/14 前可免費取消。</p>
+
+      <div class="mt-3 bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5">
+        <div class="flex items-baseline justify-between gap-2 text-xs text-stone-600 tabular-nums"><span>11/13（五）+ 11/14（六）</span><span class="font-semibold">Airbnb 合併報價</span></div>
+        <div class="flex items-baseline justify-between gap-2 mt-1.5 pt-1.5 border-t border-brand-200 tabular-nums">
+          <span class="text-sm font-bold text-brand-800">兩晚總計</span>
+          <span class="text-xl font-black text-brand-700">NT$33,873</span>
+        </div>
+        <p class="text-[11px] text-stone-500 mt-1 text-right">10 人均分約 NT$3,387／人</p>
+      </div>
+      <p class="text-[11px] text-emerald-700 mt-1.5"><i class="fa-solid fa-tag mr-1"></i> 已含「連住 2 晚再八折」優惠，為 Airbnb 系統實價、可直接下訂。</p>
+      <p class="text-xs text-rose-700 bg-rose-50 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 缺點：住客評價指「位置在山上，<strong>附近沒什麼吃的</strong>」；乾淨度僅 3.8 分，多則提到灰塵與螞蟻。</p>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <a href="https://www.airbnb.com/rooms/50759839" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-brands fa-airbnb mr-1"></i> Airbnb 房源</a>
+      </div>
+    </div>
+
+
+    <!-- 劉住春天 -->
+    <div class="card-hover bg-white rounded-2xl border-2 border-emerald-200 p-5 md:col-span-2">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800"><span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-teal-600 text-white text-xs font-black mr-2 align-middle shrink-0">4</span>劉住春天（金山）</h3>
+        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap">✓ 有空房 · 但無乾濕分離</span>
+      </div>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-semibold">🀄 電動麻將桌</span>
+        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-semibold">🎤 卡拉OK</span>
+        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-semibold">♨️ 溫泉大浴池</span>
+        <span class="text-xs bg-rose-50 text-rose-700 border border-rose-200 px-2 py-1 rounded-lg font-semibold">🚿 無乾濕分離</span>
+        <span class="text-xs bg-rose-50 text-rose-700 border border-rose-200 px-2 py-1 rounded-lg font-semibold">👤 老闆一家在現場</span>
+      </div>
+      <p class="text-sm text-stone-600 mt-3">名流路 10 巷 11 號（天籟渡假酒店後方社區）· 整棟可容 <strong>17 人</strong>，5 間臥室 / 6 間衛浴。Google 4.6★（379 則評論）。</p>
+      <p class="text-xs text-stone-500 mt-2"><strong class="text-emerald-700">Airbnb 日曆確認 11/13、11/14 兩晚皆可訂。</strong>官網定義「平日＝週日～週五、假日＝週六」，故 11/13 算平日。</p>
+      <p class="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-location-dot mr-1"></i> <strong>位置更正</strong>：Google 官方摘要載明「距離金山老街 <strong>8 公里</strong>」（約 12–15 分鐘車程），比先前記載的 5–10 分鐘遠。距陽明山國家公園僅 3 分鐘車程。</p>
+
+      <div class="mt-3 bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5">
+        <div class="flex items-baseline justify-between gap-2 text-xs text-stone-600 tabular-nums"><span>11/13（五）平日</span><span class="font-semibold">NT$18,000</span></div>
+        <div class="flex items-baseline justify-between gap-2 text-xs text-stone-600 tabular-nums mt-0.5"><span>11/14（六）假日</span><span class="font-semibold">NT$26,000</span></div>
+        <div class="flex items-baseline justify-between gap-2 mt-1.5 pt-1.5 border-t border-brand-200 tabular-nums">
+          <span class="text-sm font-bold text-brand-800">兩晚總計</span>
+          <span class="text-xl font-black text-brand-700">NT$44,000</span>
+        </div>
+        <p class="text-[11px] text-stone-500 mt-1 text-right">10 人均分約 NT$4,400／人</p>
+      </div>
+      <p class="text-xs text-emerald-700 bg-emerald-50 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-piggy-bank mr-1"></i> 同期 Airbnb 報價 <strong>48,915</strong>，<strong>直接找民宿訂便宜約 4,900 元</strong>。</p>
+
+      <!-- 負評彙整 -->
+      <div class="mt-3 bg-rose-50 border-2 border-rose-200 rounded-xl p-4">
+        <p class="font-black text-rose-800 text-sm"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Google 負評彙整（務必看完再決定）</p>
+        <p class="text-xs text-stone-600 mt-2">整體 4.6★ 看似很高，但低分評價集中在<strong>屋況老舊</strong>與<strong>報價變動</strong>兩件事，且都與 10 人包棟情境高度相關。</p>
+
+        <p class="text-xs font-bold text-rose-800 mt-3">① 屋況老舊（1★，含 9 項具體指控）</p>
+        <ul class="text-xs text-stone-600 mt-1 space-y-1 list-disc list-inside leading-relaxed">
+          <li>「房子狀況非常老舊，狀況比較可以的就是<strong>客廳跟溫泉</strong>，<strong>房間真的狀況很差</strong>」</li>
+          <li>「燈座壞掉，<strong>所有房間電視都不能看</strong>，看了評價才知道 3 年前電視就壞了老闆還不肯換，<strong>浴室門也都壞掉關不起來</strong>，明顯就是沒有在維護」</li>
+          <li>「<strong>廁所沒有乾濕分離</strong>，且動線奇怪，用過馬桶也需經過潮濕的沐浴區域」</li>
+          <li>「<strong>KTV 也是非常舊的伴唱</strong>」</li>
+          <li>「<strong>洗澡熱水無法有 2 間房間同時在使用</strong>」— 10 人同住時是實際問題</li>
+          <li>「民宿根本連被子都是薄薄的涼被…<strong>不是每個房間有暖氣</strong>，真的晚上睡覺會被冷到」— 11 月中北海岸夜間偏冷</li>
+          <li>「提供的泡麵還是再幾天就過期的泡麵」「早餐只有提供吐司跟白米…我們完全根本不敢食用」</li>
+          <li>「所謂的雅房，就是只擺下一張床，然後就什麼東西都放不下了」</li>
+        </ul>
+
+        <p class="text-xs font-bold text-rose-800 mt-3">② 報價臨時變動（1★，客房／服務／位置皆 1.0）</p>
+        <p class="text-xs text-stone-600 mt-1 leading-relaxed">「原本講好包棟連假兩晚 <strong>6 萬</strong>，後來再打去確認<strong>改口說 8 萬 4</strong>…跟我說因為之前是長輩接的…還跟我們說絕對可以一整棟包棟就夠，然後現在說會因為住太擠要再多安排別的房間…<strong>一次價差 2 萬以上</strong>」</p>
+        <p class="text-xs text-rose-800 bg-rose-100 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-phone-volume mr-1"></i> <strong>對我們的意義</strong>：本頁列的 44,000 是官網牌價。訂房時請<strong>明講 10 人（9 大 1 小）、要求書面／訊息報價</strong>，並確認「17 人內不加價」，避免事後被追加。</p>
+
+        <p class="text-xs font-bold text-stone-700 mt-3">③ 另有一則質疑近期好評真實性</p>
+        <p class="text-xs text-stone-500 mt-1">該評論者主張「近期的好評…評價應是花錢買來的？」——<strong>此為單一住客個人推測、無佐證，僅如實轉述</strong>，不代表本頁立場。</p>
+      </div>
+
+      <!-- 是否與房東同住 -->
+      <div class="mt-3 bg-amber-50 border-2 border-amber-200 rounded-xl p-4">
+        <p class="font-black text-amber-800 text-sm"><i class="fa-solid fa-user-group mr-1"></i> 是否與房東同住？<span class="ml-1 text-amber-900">→ 房源是整棟獨立，但老闆一家長時間在場</span></p>
+        <p class="text-xs text-stone-600 mt-2">Airbnb 列為「<strong>整套房源</strong>」，你們睡的空間是完整包棟、不與人共用。但大量評價顯示<strong>老闆、老闆娘、阿嬤都會在現場活動並主動互動</strong>：</p>
+        <ul class="text-xs text-stone-600 mt-2 space-y-1 list-disc list-inside leading-relaxed">
+          <li>「烤肉時<strong>老闆幫忙生火、搬風扇</strong>…給予強力支援，<strong>老闆和我們像朋友一樣聊天</strong>」</li>
+          <li>「<strong>如果不習慣和陌生人接觸也可以直接跟老闆說</strong>，爽朗的老闆會留給怕生的旅客空間」— 這句等於證實老闆平時就在場</li>
+          <li>「一抵達老闆就熱情迎接，<strong>阿嬤細心的洗著水果</strong>」「老闆 老闆娘十分親切，準備水果給我們吃」</li>
+          <li>「老闆人非常親切，不只幫我們烤地瓜，還準備了兩隻烤雞」（房客提到「烤雞」18 次）</li>
+          <li>訂房電話有時是<strong>長輩接聽</strong>（見上方報價爭議），亦顯示家人就住在附近</li>
+        </ul>
+        <p class="text-xs text-amber-800 bg-amber-100 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-lightbulb mr-1"></i> <strong>判斷</strong>：喜歡熱情招待的人會覺得加分（多數 5★ 都在誇這點）；但若你們想「關起門來自己吵鬧、不被打擾」，這是需要事先向老闆講明的點。</p>
+      </div>
+      <p class="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-circle-info mr-1"></i> 舊官網 spring.mmweb.tw 已失效（404），下方為新官網。</p>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <a href="tel:0933748592" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0933-748-592</a>
+        <a href="tel:0955937226" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0955-937-226</a>
+        <span class="text-xs bg-green-100 text-green-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-brands fa-line mr-1"></i> LINE：@352ilinp</span>
+        <a href="https://www.staythespring.com.tw/about-jinshan-bnb" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-globe mr-1"></i> 新官網</a>
+        <a href="https://www.airbnb.com/rooms/26148235" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-brands fa-airbnb mr-1"></i> Airbnb 日曆</a>
+      </div>
+    </div>
+
 
     <!-- 璞真民宿 -->
     <div class="card-hover bg-white rounded-2xl border-2 border-emerald-200 p-5">
-      <div class="flex items-start justify-between gap-2">
-        <h3 class="font-black text-lg text-brand-800">璞真民宿（金山）</h3>
-        <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">整棟包棟 · 需電洽</span>
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800"><span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-teal-600 text-white text-xs font-black mr-2 align-middle shrink-0">5</span>璞真民宿（金山）</h3>
+        <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">線上顯示可訂</span>
       </div>
-      <p class="text-sm text-stone-600 mt-2">金山頂六股 · 提供 <strong>14 人／18 人包層專案</strong>，整棟上限約 20 人，適合 10 人團體。</p>
-      <p class="text-xs text-stone-500 mt-2">「田園」整棟平日約 <strong>NT$18,000 起</strong>（旺日 21,000、假日 24,000–28,000）。訂金為房價 50%。無線上即時系統，11/13–15 需電洽 / LINE 確認。</p>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <span class="text-xs bg-rose-50 text-rose-700 border border-rose-200 px-2 py-1 rounded-lg font-semibold">🚿 無乾濕分離</span>
+        <span class="text-xs bg-rose-50 text-rose-700 border border-rose-200 px-2 py-1 rounded-lg font-semibold">🀄🎤 無娛樂設施</span>
+      </div>
+      <p class="text-xs text-rose-700 bg-rose-50 rounded-lg px-3 py-2 mt-3"><i class="fa-solid fa-circle-xmark mr-1"></i> <strong>兩項條件皆不符</strong>：無麻將、無卡拉OK，衛浴也無乾濕分離。目前保留在清單中的唯一理由是<strong>它是四間「線上可確認有空房」的其中之一</strong>，可作為其他都訂不到時的保底。</p>
+      <p class="text-sm text-stone-600 mt-3">金山頂六股 · 「田園-包棟」標準 20 人，另有 <strong>14 人／18 人包層專案</strong>。假日只接受包棟。</p>
+      <p class="text-xs text-stone-500 mt-2">官網訂房系統 11/13、14、15 三天均顯示「可預定」且可實際下單。房型標題標「請來電洽詢」，訂金為房價 50%。</p>
+
+      <div class="mt-3 bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5">
+        <div class="flex items-baseline justify-between gap-2 text-xs text-stone-600 tabular-nums"><span>11/13（五）旺日</span><span class="font-semibold">NT$21,000</span></div>
+        <div class="flex items-baseline justify-between gap-2 text-xs text-stone-600 tabular-nums mt-0.5"><span>11/14（六）假日</span><span class="font-semibold">NT$24,000–28,000</span></div>
+        <div class="flex items-baseline justify-between gap-2 mt-1.5 pt-1.5 border-t border-brand-200 tabular-nums">
+          <span class="text-sm font-bold text-brand-800">兩晚總計</span>
+          <span class="text-lg font-black text-brand-700">NT$45,000–49,000</span>
+        </div>
+        <p class="text-[11px] text-stone-500 mt-1 text-right">10 人均分約 NT$4,500–4,900／人</p>
+      </div>
+      <p class="text-[11px] text-stone-500 mt-1.5"><i class="fa-solid fa-circle-info mr-1"></i> 官網定義「旺日＝星期五」「假日＝星期六」，假日價為區間需洽詢；標價含 20 人，超過加收 600 元／人。</p>
+      <p class="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-circle-exclamation mr-1"></i> 該站 8–12 月<strong>每一天都顯示可訂、查無任何滿房日</strong>（含國慶連假），不排除電話訂單未回填月曆，仍請電話確認。麻將／KTV 官網查無資料。</p>
       <div class="flex flex-wrap gap-2 mt-3">
         <a href="tel:0915616786" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0915-616-786</a>
         <a href="tel:0224980082" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 02-2498-0082</a>
@@ -417,54 +789,177 @@
       </div>
     </div>
 
-    <!-- 亞城民宿 -->
-    <div class="card-hover bg-white rounded-2xl border-2 border-emerald-200 p-5">
-      <div class="flex items-start justify-between gap-2">
-        <h3 class="font-black text-lg text-brand-800">亞城民宿（金山）</h3>
-        <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">整棟包棟 · 需電洽</span>
+    <!-- 九份山嶼海 -->
+    <div class="card-hover bg-white rounded-2xl border-2 border-emerald-300 p-5 md:col-span-2">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800"><span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-teal-600 text-white text-xs font-black mr-2 align-middle shrink-0">6</span>九份山嶼海民宿（瑞芳）</h3>
+        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap">✓ 有空房 · 人數最合身 · 車程最省</span>
       </div>
-      <p class="text-sm text-stone-600 mt-2">陽金公路旁 · 整棟包棟 <strong>約 16 人、附 KTV</strong>，四面環山、可三代同堂。</p>
-      <p class="text-xs text-stone-500 mt-2">無線上即時系統，整棟價位需洽詢；11/13–15 請電話 / LINE 確認空房。距金山市區約 10 分鐘車程。</p>
       <div class="flex flex-wrap gap-2 mt-3">
-        <a href="tel:0910145783" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0910-145-783</a>
-        <span class="text-xs bg-green-100 text-green-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-brands fa-line mr-1"></i> LINE：@278sqtmv</span>
-        <a href="https://yacheng.taipeibnb.tw/" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-globe mr-1"></i> 官網</a>
+        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-semibold">🎤 專屬 KTV</span>
+        <span class="text-xs bg-rose-50 text-rose-700 border border-rose-200 px-2 py-1 rounded-lg font-semibold">🚿 浴缸 · 無乾濕分離</span>
+        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-semibold">🚗 距九份老街 1 分</span>
+      </div>
+      <p class="text-sm text-stone-600 mt-3">瑞芳區汽車路 80 號（九份山腳、公車「代天府」站旁）· 三層樓六間房。<strong class="text-emerald-700">Google 4.9★（553 則評論）</strong>——本清單樣本數最多、分數也最高的一間。</p>
+      <p class="text-xs text-stone-600 mt-2">官網原文「包棟人數可選擇有 <strong>10 人</strong>、18 人及 28 人之包棟」——<strong>是唯一直接提供 10 人包棟方案的一間</strong>，其他候選都是 16–26 人的房子，10 個人住起來偏空。KTV 官網直述「專屬 KTV」，三樓另設 KTV 娛樂空間。</p>
+      <p class="text-xs text-stone-500 mt-2"><strong class="text-emerald-700">✓ 奧丁丁訂房系統實測：11/13 入住、11/15 退房兩晚連住可訂。</strong></p>
+
+      <div class="mt-3 bg-brand-50 border border-brand-200 rounded-xl px-3 py-2.5">
+        <div class="flex items-baseline justify-between gap-2 text-xs text-stone-600 tabular-nums"><span>11/13（五）平日</span><span class="font-semibold">NT$18,600</span></div>
+        <div class="flex items-baseline justify-between gap-2 text-xs text-stone-600 tabular-nums mt-0.5"><span>11/14（六）假日</span><span class="font-semibold">NT$20,400</span></div>
+        <div class="flex items-baseline justify-between gap-2 mt-1.5 pt-1.5 border-t border-brand-200 tabular-nums">
+          <span class="text-sm font-bold text-brand-800">兩晚總計</span>
+          <span class="text-xl font-black text-brand-700">NT$39,000</span>
+        </div>
+        <p class="text-[11px] text-stone-500 mt-1 text-right">10 人均分約 NT$3,900／人</p>
+      </div>
+      <p class="text-[11px] text-emerald-700 mt-1.5"><i class="fa-solid fa-tag mr-1"></i> 此為 <strong>18 人包棟</strong>牌價；<strong>10 人包棟價官網未列，需洽詢（很可能更低）</strong>。</p>
+
+      <p class="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-route mr-1"></i> <strong>車程最省的一間</strong>：D1 和平島 22 分、D2 深澳 11 分、九份老街 1 分（它就在九份）。代價是 <strong>D3 金山老街 51 分</strong>——但 D3 是最後一天、行程最鬆，也可改成「九份出發沿台 2 線玩到金山再南下還車」，反而順路。</p>
+      <p class="text-xs text-rose-700 bg-rose-50 rounded-lg px-3 py-2 mt-2"><i class="fa-solid fa-shower mr-1"></i> <strong>衛浴為浴缸、無乾濕分離</strong>（已確認）。若乾濕分離是必要條件，這間不符。</p>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <a href="tel:0907862266" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0907-862266</a>
+        <span class="text-xs bg-green-100 text-green-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-brands fa-line mr-1"></i> LINE：@a0907862266</span>
+        <a href="https://www.jiufenshanyuhai.com/" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-globe mr-1"></i> 官網</a>
+        <a href="https://booking.owlting.com/shanyuhaiqinziminsu" target="_blank" class="text-xs bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-calendar-check mr-1"></i> 奧丁丁線上訂房</a>
       </div>
     </div>
 
-    <!-- 劉住春天 -->
-    <div class="card-hover bg-white rounded-2xl border-2 border-emerald-200 p-5">
-      <div class="flex items-start justify-between gap-2">
-        <h3 class="font-black text-lg text-brand-800">劉住春天（金山）</h3>
-        <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">整棟包棟 · 需電洽</span>
+
+    <!-- 消夜與採買 -->
+    <div class="card-hover bg-white rounded-2xl border-2 border-brand-200 p-5 md:col-span-2">
+      <h3 class="font-black text-lg text-brand-800"><i class="fa-solid fa-cart-shopping mr-1"></i> 消夜與採買（金山／萬里）</h3>
+      <div class="grid md:grid-cols-2 gap-4 mt-3">
+        <div>
+          <p class="text-sm font-bold text-stone-700">全聯福利中心</p>
+          <p class="text-xs text-stone-600 mt-1">· <strong>金山店</strong>：中山路 114 號，營業到 <strong>22:30</strong><br>· <strong>萬里瑪鋉門市</strong>：美崙 12 號，營業到 <strong>23:00</strong></p>
+        </div>
+        <div>
+          <p class="text-sm font-bold text-stone-700">22:30 之後</p>
+          <p class="text-xs text-stone-600 mt-1">只剩超商：中山路 7-11 金中門市（有座位、廁所、ATM）、環金路口 7-11 金山環金門市。</p>
+        </div>
       </div>
-      <p class="text-sm text-stone-600 mt-2">金山名流路（天籟酒店後方社區）· 整棟包棟 <strong>可容約 17 人</strong>，可泡湯、辦派對。</p>
-      <p class="text-xs text-stone-500 mt-2">整棟一晚約 <strong>平日 NT$15,000／週五 NT$18,000（17 人內）</strong>。無線上即時系統，11/13–15 需電洽確認。距金山市區約 5–10 分鐘。</p>
-      <div class="flex flex-wrap gap-2 mt-3">
-        <a href="tel:0933748592" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0933-748-592</a>
-        <a href="tel:0955937226" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0955-937-226</a>
-        <a href="https://spring.mmweb.tw/" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-globe mr-1"></i> 官網</a>
-      </div>
+      <p class="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2 mt-3"><i class="fa-solid fa-circle-info mr-1"></i> 金包里老街店家多在 <strong>18:00–19:00 前打烊</strong>，不能當消夜來源。金山小夜市只在<strong>週二、週六</strong>營業（18:00 起）——<strong>11/14 剛好是週六，晚上有夜市可逛</strong>。</p>
     </div>
 
-    <!-- 三芝旅途中海邊民宿 -->
-    <div class="card-hover bg-white rounded-2xl border-2 border-emerald-200 p-5">
-      <div class="flex items-start justify-between gap-2">
-        <h3 class="font-black text-lg text-brand-800">旅途中海邊民宿（三芝）</h3>
-        <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">整棟包棟 · 海景 · 需電洽</span>
-      </div>
-      <p class="text-sm text-stone-600 mt-2">三芝淺水灣海景第一排 · 提供 <strong>8／10／14／20 人包棟</strong>方案，有露台可烤肉、寵物友善。</p>
-      <p class="text-xs text-stone-500 mt-2">無線上即時系統，訂金為房價 30%；11/13–15 需電洽確認。位於北海岸西段，往金山約 30–40 分鐘車程（海景取向的備援選項）。</p>
-      <div class="flex flex-wrap gap-2 mt-3">
-        <a href="tel:0920590328" class="text-xs bg-brand-600 text-white px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-phone mr-1"></i> 0920-590-328</a>
-        <a href="https://traveling.ego.tw/" target="_blank" class="text-xs bg-stone-100 text-stone-700 px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-globe mr-1"></i> 官網</a>
-      </div>
-    </div>
 
     <!-- 訂房提醒 -->
     <div class="card-hover bg-brand-50 rounded-2xl border-2 border-brand-200 p-5 md:col-span-2">
       <h3 class="font-black text-lg text-brand-800"><i class="fa-solid fa-circle-info mr-1"></i> 訂房提醒</h3>
-      <p class="text-xs text-stone-600 mt-3">上列金山包棟（名流、璞真、亞城、劉住春天）與三芝海邊民宿皆為<strong>整棟包棟、可容 10 人以上</strong>，惟均<strong>無線上即時訂房系統</strong>，11/13–15 空房一律以電話 / LINE 洽詢為準，越早訂越好、多需先付訂金。價位為官網 / 訂房站公開資訊，實際以民宿回覆為準。</p>
+      <p class="text-xs text-stone-600 mt-3">空房標示 <strong class="text-emerald-700">✓</strong> 的三間各有不同驗證來源：<strong>劉住春天、萬里海景</strong>為 Airbnb 官方日曆 API 逐日驗證（11/13、11/14 兩晚皆開放），可信度最高；<strong>璞真</strong>為官網訂房系統顯示可下單，但該站 8–12 月查無任何滿房日，不排除電話訂單未回填月曆，仍建議電話複查。<strong>浪漫金山</strong>無線上系統，空房與報價一律以電話回覆為準。</p>
+      <p class="text-xs text-stone-600 mt-2">價位為官網 / 訂房站公開資訊，實際以民宿回覆為準，多需先付訂金。</p>
+      <p class="text-xs text-stone-600 mt-2">另註：原清單中的「<strong>簡單生活</strong>」，經交通部觀光署旅宿網等多方查證，<strong>北海岸範圍查無此民宿</strong>（同名者位於花蓮新城），已移除。</p>
+    </div>
+
+
+    <!-- 已滿：灰盒子 -->
+    <div class="bg-stone-100 rounded-2xl border-2 border-stone-300 p-5 opacity-75">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-stone-600 line-through">灰盒子（金山）</h3>
+        <span class="text-xs bg-rose-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap">✗ 已滿</span>
+      </div>
+      <p class="text-sm text-stone-600 mt-2">16 人、有電動麻將桌 + 隔音歡唱房，<strong>三條件本來全中，最可惜的一間</strong>。</p>
+      <p class="text-xs text-stone-500 mt-2">Airbnb 官方日曆逐日確認：11 月封鎖 7、13、14、20、27、28 日（全為週五六），<strong>11/13 與 11/14 兩晚均已被訂走</strong>。日曆已開放至 2027/6，故非「未開放」而是確實客滿。</p>
+      <p class="text-xs text-stone-500 mt-2 bg-stone-200/60 rounded-lg px-3 py-2"><strong>房價：不適用</strong> — 日期已封鎖，Airbnb 不再顯示報價，故無兩晚金額可列。</p>
+    </div>
+
+
+    <!-- 已滿：神隱之森 -->
+    <div class="bg-stone-100 rounded-2xl border-2 border-stone-300 p-5 opacity-75">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-stone-600 line-through">神隱之森（瑞芳／九份）</h3>
+        <span class="text-xs bg-rose-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap">✗ 11/14 已滿</span>
+      </div>
+      <p class="text-sm text-stone-600 mt-2">官方 OwlNest 訂房系統實測：11/14 不可選；選 11/13 入住後，退房日只剩 11/14 可選。</p>
+      <p class="text-xs text-stone-500 mt-2">即使有空，本館限 2–7 人（10 人須加訂另一館），且位在九份、與金山行程不同區、通勤較遠。</p>
+      <p class="text-xs text-stone-500 mt-2 bg-stone-200/60 rounded-lg px-3 py-2"><strong>房價：不適用</strong> — 本館 2 人 NT$3,580 起／晚、加人 NT$1,200／人／晚（含早餐），但 <strong>10 人已超過本館 7 人上限</strong>，須再加訂木質調館（2–6 人）才夠住，兩館合計價未公開。</p>
+    </div>
+
+
+    <!-- 已滿：其他 -->
+    <div class="bg-stone-100 rounded-2xl border-2 border-stone-300 p-5 opacity-75 md:col-span-2">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-stone-600">其他已確認客滿</h3>
+        <span class="text-xs bg-rose-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap">✗ 11/14 已滿</span>
+      </div>
+      <p class="text-sm text-stone-600 mt-2">W&amp;W HOUSE 一館－葳葦民宿（金山，20 人）、陽明山紅糖彩居（18 床）、金山市區 6-10 人住宿空間 — 三間 Airbnb 日曆均顯示 <strong>11/14 週六不可訂</strong>（金山市區那間 11/8 起整月封鎖）。</p>
+      <p class="text-xs text-stone-500 mt-2 bg-stone-200/60 rounded-lg px-3 py-2"><strong>房價：不適用</strong> — 三間在 11/13–15 無法成訂。Airbnb 為它們顯示的兩晚金額（葳葦 39,600、紅糖彩居 66,120、金山市區 18,143）<strong>是系統改推薦的其他週末日期</strong>（10/30–11/1、11/20–22、11/6–8），並非 11/13–15 的價格，不可拿來比較。</p>
+    </div>
+
+    <!-- 落選民宿參考 -->
+    <div class="bg-stone-100 rounded-2xl border-2 border-stone-300 p-5 md:col-span-2">
+      <h3 class="font-black text-lg text-stone-700"><i class="fa-solid fa-folder-open mr-1"></i> 落選民宿參考</h3>
+      <p class="text-xs text-stone-600 mt-2">查證過程中評估過、但最終未列入候選的民宿，保留紀錄以免日後重複查。</p>
+
+      <p class="text-xs font-bold text-stone-700 mt-4">一、有 KTV 佐證且確認營業中，但各有硬傷</p>
+      <div class="grid md:grid-cols-3 gap-3 mt-2">
+        <div class="bg-white rounded-xl border border-stone-200 p-3">
+          <p class="font-bold text-sm text-stone-700">嶼山眠民宿（瑞芳）</p>
+          <p class="text-[11px] text-stone-500 mt-1">2026/8 全新開幕 · 逢甲路 66 號（九份山腳、瑞芳車站旁）</p>
+          <p class="text-xs text-stone-600 mt-2"><strong>KTV 佐證最硬</strong>：業者親自發文「設施：<strong>KTV</strong>、電動麻將桌、街機遊戲台…」（2026/8/5）。Google 5.0★但僅 3 則評論。</p>
+          <p class="text-xs text-rose-700 mt-2"><strong>⚠️ 僅登記 4 間房，可住幾人業者未公開</strong>，10 人恐怕進不去。基隆約 20–25 分、金山約 50–60 分。</p>
+          <p class="text-[11px] text-stone-500 mt-1">LINE @733jxrrp／0931-336625</p>
+        </div>
+        <div class="bg-white rounded-xl border border-stone-200 p-3">
+          <p class="font-bold text-sm text-stone-700">三芝櫻花村民宿</p>
+          <p class="text-[11px] text-stone-500 mt-1">三芝聽濤街 23 號（芝柏藝術村）· Google 4.9★（126 則）</p>
+          <p class="text-xs text-stone-600 mt-2">包棟 11–20 人、NT$10,000–19,999。<strong>可線上查價訂房，確定營運中。</strong></p>
+          <p class="text-xs text-rose-700 mt-2"><strong>⚠️ 卡拉OK 來源衝突</strong>：一站列「卡拉ok(限包棟)」但未標日期；新北觀旅網 2025/7 更新版的包棟設施<strong>沒有列卡拉OK</strong>，機器還在不在要問。距金山 35–40 分。</p>
+          <p class="text-[11px] text-stone-500 mt-1">(02)2636-9333</p>
+        </div>
+        <div class="bg-white rounded-xl border border-stone-200 p-3">
+          <p class="font-bold text-sm text-stone-700">金山金色陽光民宿</p>
+          <p class="text-[11px] text-stone-500 mt-1">金山六股里 12-5 號 · Google 4.6★（186 則）</p>
+          <p class="text-xs text-stone-600 mt-2">Google 官方住宿描述直述「配套設施包括…<strong>帶卡拉OK設備的休息室</strong>」。距金山市區僅 7–10 分。</p>
+          <p class="text-xs text-rose-700 mt-2"><strong>⚠️ 官方登記僅 4 間房</strong>（含一間通鋪），各房人數全網查無，10 人吃緊。</p>
+          <p class="text-[11px] text-stone-500 mt-1">0928-143-918／02-2498-9879</p>
+        </div>
+      </div>
+
+      <p class="text-xs font-bold text-stone-700 mt-4">二、查證後排除</p>
+      <div class="grid md:grid-cols-3 gap-4 mt-2">
+
+        <div class="bg-white rounded-xl border border-rose-200 p-4">
+          <p class="font-bold text-stone-700 line-through">雲雲山頂 YUN YUN VILLA（萬里）</p>
+          <span class="text-xs bg-rose-600 text-white font-bold px-2 py-0.5 rounded-full">研判已歇業</span>
+          <p class="text-xs text-stone-600 mt-2">條件本來最漂亮：部落格明載「KTV 室、麻將桌」與「浴室採…<strong>乾濕分離</strong>設計」，還有山泉湯屋、無邊際泳池。<strong>但五項證據都指向已停業：</strong></p>
+          <ul class="text-xs text-stone-600 mt-2 space-y-1 list-disc list-inside">
+            <li>食尚玩家頁面標題直接寫「<strong>已歇業</strong>」</li>
+            <li>Booking.com <strong>已下架</strong>：房源網址轉導至搜尋頁，且萬里搜尋結果 4 間中查無此店</li>
+            <li>Facebook <strong>最後一則貼文停在 2025/4/27</strong>（逾 15 個月）</li>
+            <li>FB 留言區有人問「<strong>請問還有營業嗎？</strong>」，約 24 週前發問<strong>至今無人回覆</strong></li>
+            <li>搜尋到的「官方訂房系統」是自動產生的聯盟頁（內文寫成「台北市萬里區」「鄰近台北 101」，明顯為模板）</li>
+          </ul>
+          <p class="text-[11px] text-stone-500 mt-2">另註：僅有的「乾濕分離」佐證來自 2017–2018 年舊名「雲頂 Villa」時期的文章。</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-amber-200 p-4">
+          <p class="font-bold text-stone-700">當我們同在一起（金山山城路）</p>
+          <span class="text-xs bg-amber-500 text-white font-bold px-2 py-0.5 rounded-full">三項硬傷</span>
+          <p class="text-xs text-stone-600 mt-2">卡拉OK 佐證充分（多來源，且標榜「不限時數、無人打擾」），也有麻將與溫泉池，但：</p>
+          <ul class="text-xs text-stone-600 mt-2 space-y-1 list-disc list-inside">
+            <li><strong>乾濕分離完全查無佐證</strong> — 官網、Trip.com、永安旅遊、新北市觀光旅遊網全掃過，無任何浴室細節</li>
+            <li><strong>假日包棟門檻 15 人</strong>（平日 10 人）— 11/14 是週六，我們 10 人可能不符或需按 15 人計價</li>
+            <li>官網 go-together.tw <strong>DNS 無法解析</strong>；該地址（山城路 58 號）在 Google 地圖上只查得到另一間名為「陽明山」的民宿，<strong>查無此店的商家頁</strong></li>
+          </ul>
+          <p class="text-[11px] text-stone-500 mt-2">若仍想試：0922-220-825（LINE 同號）。</p>
+        </div>
+      
+        <div class="bg-white rounded-xl border border-rose-200 p-4">
+          <p class="font-bold text-stone-700 line-through">北海岸愛之船（石門）</p>
+          <span class="text-xs bg-rose-600 text-white font-bold px-2 py-0.5 rounded-full">位置過遠</span>
+          <p class="text-xs text-stone-600 mt-2">KTV 官網直述、奧丁丁確認 11/13–15 有空房，但<strong>位於北海岸最西端</strong>，而行程主軸全在東邊。</p>
+          <ul class="text-xs text-stone-600 mt-2 space-y-1 list-disc list-inside">
+            <li>D2 到九份 <strong>75 分鐘單程</strong>，來回多花 2.5 小時在車上</li>
+            <li>D1 和平島 53 分、D2 深澳 64 分，皆為全清單最遠</li>
+            <li>衛浴為浴缸、<strong>無乾濕分離</strong>；Google 4.1★（1,675 則，含餐廳）為清單最低</li>
+            <li>包棟人數與包棟價完全未公開</li>
+          </ul>
+          <p class="text-[11px] text-stone-500 mt-2">(02) 2638-0091</p>
+        </div>
+      </div>
+
+      <p class="text-xs text-stone-600 bg-white rounded-lg px-3 py-2 mt-4 border border-stone-200"><i class="fa-solid fa-circle-info mr-1"></i> <strong>查證方法備註</strong>：「乾濕分離」在台灣民宿文案中極少主動寫出來——官方旅宿網只登記「衛浴設備」四字，訂房平台也只列「淋浴間／浴缸」，因此這一項最終是靠逐間確認才定案。佐證：樂天新北住宿網的「卡拉ok(限包棟)」篩選器，<strong>整個新北市只篩得到 1 筆</strong>。</p>
     </div>
 
   </div>
@@ -538,6 +1033,90 @@
       else { p.classList.add('hidden'); p.classList.remove('fade-in'); }
     });
   }));
+</script>
+
+<!-- ===== 地圖 ===== -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+  var el = document.getElementById('tripmap');
+  if (!el || typeof L === 'undefined') return;
+
+  var stays = [
+    {n:'浪漫金山',      lat:25.217125, lon:121.634500, top:true,
+     d:'金山・環金路147號｜24–26人｜29,000/晚<br><b>🎤KTV ＋ 🚿乾濕分離</b>｜Google 4.9★(87)<br>空房需電洽 0930-566-064'},
+    {n:'浪漫萬里',      lat:25.205250, lon:121.628000, top:true,
+     d:'萬里・公館崙58號｜5間房｜8,800起/晚<br><b>🎤KTV(照片佐證) ＋ 🚿乾濕分離</b>｜Google 5.0★(36)<br>與浪漫金山同一經營者，同支電話'},
+    {n:'萬里海景包棟別墅', lat:25.1950, lon:121.6850, approx:true,
+     d:'萬里（<b>概略位置</b>，Airbnb 未公開精確地點）<br>兩晚 33,873｜🀄麻將 🎤KTV｜✗無乾濕分離<br>✓ Airbnb 日曆確認有空房'},
+    {n:'劉住春天',      lat:25.202375, lon:121.598375,
+     d:'金山・名流路10巷11號｜17人｜兩晚 44,000<br>🀄麻將 🎤KTV｜✗無乾濕分離｜Google 4.6★(379)<br>⚠️低分評價指屋況老舊、報價曾變動'},
+    {n:'璞真民宿',      lat:25.221689, lon:121.613945,
+     d:'金山・頂六股｜20人｜兩晚 45,000–49,000<br><b>✗無娛樂設施 ✗無乾濕分離</b>｜Google 4.7★(164)<br>保底選項（線上顯示可訂）'},
+    {n:'九份山嶼海',    lat:25.111190, lon:121.844865,
+     d:'瑞芳・汽車路80號｜<b>有10人包棟方案</b>｜18人牌價兩晚約39,000<br>🎤KTV｜✗無乾濕分離｜<b>Google 4.9★(553)</b><br>✓ 奧丁丁訂房系統確認有空房'}
+  
+  ];
+
+  var spots = [
+    {n:'南港火車站（取車）', lat:25.0533, lon:121.6069, day:1},
+    {n:'基隆廟口夜市',     lat:25.1286, lon:121.7429, day:1},
+    {n:'和平島公園',       lat:25.1631, lon:121.7626, day:1},
+    {n:'正濱漁港彩色屋',   lat:25.1503, lon:121.7676, day:1},
+    {n:'深澳鐵道自行車',   lat:25.1327, lon:121.8003, day:2},
+    {n:'九份老街',         lat:25.1069, lon:121.8420, day:2},
+    {n:'十分老街',         lat:25.0430, lon:121.7756, day:2},
+    {n:'金山老街',         lat:25.2214, lon:121.6390, day:3},
+    {n:'野柳地質公園',     lat:25.2065, lon:121.6906, day:3}
+  ];
+
+  var dayColor = {1:'#f43f5e', 2:'#7c3aed', 3:'#0284c7'};
+
+  var map = L.map(el, {scrollWheelZoom:false}).setView([25.17, 121.70], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  function dot(color, label, ring) {
+    return L.divIcon({
+      className: '',
+      html: '<div style="background:' + color + ';width:26px;height:26px;border-radius:50%;border:3px solid #fff;'
+          + 'box-shadow:0 2px 6px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;'
+          + 'color:#fff;font-weight:900;font-size:12px' + (ring ? ';outline:3px solid ' + ring : '') + '">' + label + '</div>',
+      iconSize: [26,26], iconAnchor: [13,13], popupAnchor: [0,-14]
+    });
+  }
+  function square(color, label) {
+    return L.divIcon({
+      className: '',
+      html: '<div style="background:' + color + ';width:22px;height:22px;border-radius:5px;border:2px solid #fff;'
+          + 'box-shadow:0 2px 5px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;'
+          + 'color:#fff;font-weight:900;font-size:11px">' + label + '</div>',
+      iconSize: [22,22], iconAnchor: [11,11], popupAnchor: [0,-12]
+    });
+  }
+
+  var all = [];
+  stays.forEach(function (s, i) {
+    var color = s.top ? '#f59e0b' : (s.far ? '#e11d48' : '#0d9488');
+    L.marker([s.lat, s.lon], {icon: dot(color, String(i+1), s.top ? 'rgba(245,158,11,.3)' : null)})
+     .addTo(map)
+     .bindPopup('<b style="font-size:14px">' + (i+1) + '. ' + s.n + '</b>'
+              + (s.approx ? ' <span style="color:#78716c;font-size:11px">(概略)</span>' : '')
+              + '<br><span style="font-size:12px;line-height:1.6">' + s.d + '</span>');
+    all.push([s.lat, s.lon]);
+  });
+  spots.forEach(function (p) {
+    L.marker([p.lat, p.lon], {icon: square(dayColor[p.day], 'D' + p.day)})
+     .addTo(map)
+     .bindPopup('<b>' + p.n + '</b><br><span style="font-size:12px">Day ' + p.day + ' 行程點</span>');
+    all.push([p.lat, p.lon]);
+  });
+
+  map.fitBounds(L.latLngBounds(all).pad(0.12));
+  map.once('focus', function () { map.scrollWheelZoom.enable(); });
+})();
 </script>
 </body>
 </html>
