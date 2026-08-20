@@ -3,3 +3,6 @@ _封存/
 # 版本草稿檔（本機保留，不發布到 GitHub Pages）
 index_v*.html
 *.tmp
+
+# 驗證用暫存下載檔
+live*.html
