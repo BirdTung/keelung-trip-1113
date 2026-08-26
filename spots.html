@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>景點投票參考 · 基隆北海岸 2026/11/13–15</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] },
+        colors: {
+          brand: {
+            50:'#f0fdfa',100:'#ccfbf1',200:'#99f6e4',300:'#5eead4',
+            400:'#2dd4bf',500:'#14b8a6',600:'#0d9488',700:'#0f766e',
+            800:'#115e59',900:'#134e4a'
+          }
+        }
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background-color: #fafaf9; }
+  .tl-line::before {
+    content:''; position:absolute; left:19px; top:8px; bottom:-8px;
+    width:2px; background:linear-gradient(#5eead4,#e7e5e4);
+  }
+  .tab-active { background:#0f766e; color:#fff; box-shadow:0 8px 20px -8px rgba(15,118,110,.6); }
+  .fade-in { animation: fade .4s ease; }
+  @keyframes fade { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+  .card-hover { transition:transform .2s, box-shadow .2s; }
+  .card-hover:hover { transform:translateY(-3px); box-shadow:0 18px 30px -18px rgba(15,118,110,.5); }
+  .stay-tip { background:#f59e0b; color:#fff; font-weight:800; border:2px solid #fff;
+              border-radius:8px; padding:2px 8px; font-size:12px; box-shadow:0 2px 8px rgba(0,0,0,.35); }
+  .stay-tip::before { border-right-color:#f59e0b !important; }
+</style>
+</head>
+<body class="font-sans text-stone-800">
+
+<nav class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-stone-200">
+  <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2 font-black text-brand-700">
+      <i class="fa-solid fa-arrow-left text-brand-500"></i><span>回行程主頁</span>
+    </a>
+    <div class="flex items-center gap-4 text-sm font-medium text-stone-600">
+      <a href="#table" class="hover:text-brand-600">總覽</a>
+      <a href="#cards" class="hover:text-brand-600">逐項說明</a>
+    </div>
+  </div>
+</nav>
+
+<header class="relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-brand-600 via-brand-700 to-brand-900"></div>
+  <div class="relative max-w-5xl mx-auto px-4 py-12 text-white">
+    <p class="inline-flex items-center gap-2 bg-white/15 backdrop-blur px-3 py-1 rounded-full text-sm font-medium mb-4">
+      <i class="fa-solid fa-square-poll-vertical"></i> 投票用參考資料
+    </p>
+    <h1 class="text-3xl md:text-4xl font-black leading-tight mb-3">景點清單 · 投票參考</h1>
+    <p class="text-brand-100 text-base max-w-2xl leading-relaxed">
+      2026/11/13–15，9 位大人、自駕 2 車、住九份隱山居。<br>
+      以下是目前行程中的 13 個景點，每個都標了<strong class="text-white">距九份車程</strong>與<strong class="text-white">建議停留時間</strong>——
+      這兩個數字加起來就是它的「時間成本」，投票時可以一起看。
+    </p>
+    <div class="mt-5 bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4">
+      <p class="font-bold text-white text-sm mb-1"><i class="fa-solid fa-circle-info mr-1"></i> 三天大概能排幾個？</p>
+      <p class="text-sm text-brand-50 leading-relaxed">
+        扣掉 D1 中午才從南港出發、D3 下午要還車，實際可用時間約<strong class="text-white">兩個整天再多一點</strong>。
+        以悠閒為前提，<strong class="text-white">一天 3 個點</strong>比較舒服，三天大約 <strong class="text-white">8–9 個</strong>；
+        若想更鬆，抓 <strong class="text-white">6–7 個</strong>。九份老街因為就在住處門口、不佔白天，不計入這個額度。
+      </p>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4">
+
+  <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-5 mt-8">
+    <h2 class="font-black text-lg text-rose-800"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 這次查證發現的三個錯誤（投票前請先看）</h2>
+    <ul class="text-sm text-stone-700 mt-3 space-y-2 list-disc list-inside leading-relaxed">
+      <li><strong>海龍珠水產不在正濱漁港</strong>，實際在<strong>基隆安樂區基金三路 71-7 號</strong>，與正濱漁港相距約 20 分鐘、方向相反。原本「逛完彩色屋走過去吃」的排法不成立。</li>
+      <li><strong>「我們在海邊」不在金山，在三芝</strong>，從金山還要再往西開 25–30 分鐘。若保留，D3 賦歸要多繞一大圈。</li>
+      <li><strong>深澳象鼻岩已經沒有了</strong>：象鼻岩於 <strong>2023/12/16 崩塌落海</strong>，現在只剩深澳岬角的海蝕平台可看。網路上很多文章仍把它當賣點，別被誤導。</li>
+    </ul>
+  </div>
+
+  <section id="table" class="py-10">
+    <h2 class="text-2xl md:text-3xl font-black text-brand-800 mb-2 flex items-center gap-2">
+      <i class="fa-solid fa-table-list text-brand-500"></i> 總覽表
+    </h2>
+    <p class="text-sm text-stone-500 mb-4">車程為由九份出發的單程推估值（平溪山路已按實際路況調整），供相對比較用。</p>
+    <div class="overflow-x-auto -mx-1 px-1">
+      <table class="w-full text-sm border-collapse min-w-[680px]">
+        <thead>
+          <tr class="bg-brand-50 text-brand-800">
+            <th class="text-left font-bold px-3 py-2 rounded-l-lg">景點</th>
+            <th class="text-left font-bold px-2 py-2">區域</th>
+            <th class="text-right font-bold px-2 py-2">距九份</th>
+            <th class="text-right font-bold px-2 py-2">建議停留</th>
+            <th class="text-left font-bold px-2 py-2 rounded-r-lg">費用</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-500 text-white text-[11px] font-black mr-1.5 align-middle">1</span><strong>和平島公園</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">基隆</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">22 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">2.5–3 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">全票 120 元（敬老／學生 60、團體 96）</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-stone-400 text-white text-[11px] font-black mr-1.5 align-middle">2</span><strong>正濱漁港彩色屋</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">基隆</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">20 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">30–60 分鐘</td>
+            <td class="px-2 py-2 text-xs text-stone-600">免費</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle">3</span><strong>基隆廟口夜市</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">基隆</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">25 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">1.5–2 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">免費入場，小吃自費</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle">4</span><strong>仁愛市場</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">基隆</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">25 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">1–1.5 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">免費入場，小吃自費</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle">5</span><strong>海龍珠水產海鮮餐廳</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">基隆</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">35 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">1.5 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">合菜自費，9 人建議先訂桌</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-600 text-white text-[11px] font-black mr-1.5 align-middle">6</span><strong>九份老街</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">瑞芳・九份</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">步行 2 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">1.5–2 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">免費入場，小吃自費</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle">7</span><strong>深澳鐵道自行車</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">瑞芳・九份</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">11 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">1–1.5 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">單程 150 元 / 來回 250 元</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle">8</span><strong>十分老街 · 放天燈</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">平溪</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">35 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">2–2.5 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">天燈單色約 200 元、四色約 250 元</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-stone-400 text-white text-[11px] font-black mr-1.5 align-middle">9</span><strong>十分瀑布</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">平溪</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">40 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">1–1.5 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">免費</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle">10</span><strong>金山老街（金包里）</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">金山・北海岸</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">51 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">1.5–2 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">免費入場，小吃自費</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-600 text-white text-[11px] font-black mr-1.5 align-middle">11</span><strong>兄弟食堂</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">金山・北海岸</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">51 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">1–1.5 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">合菜自費，9 人建議先訂桌</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-stone-400 text-white text-[11px] font-black mr-1.5 align-middle">12</span><strong>洋荳子咖啡館</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">金山・北海岸</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">55 分</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">1–1.5 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">飲品餐點自費</td>
+          </tr>
+          <tr class="border-b border-stone-100">
+            <td class="px-3 py-2"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-stone-400 text-white text-[11px] font-black mr-1.5 align-middle">13</span><strong>我們在海邊</strong></td>
+            <td class="px-2 py-2 text-stone-600 whitespace-nowrap">三芝</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap tabular-nums">80 分以上</td>
+            <td class="px-2 py-2 text-right whitespace-nowrap">1.5–2 小時</td>
+            <td class="px-2 py-2 text-xs text-stone-600">套餐自費</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="flex flex-wrap gap-3 mt-4 text-xs">
+      <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-emerald-600 inline-block"></span>住處旁 · 零時間成本</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-amber-500 inline-block"></span>需要整段時間</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-teal-600 inline-block"></span>中等時間成本</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-stone-400 inline-block"></span>順路加點</span>
+    </div>
+  </section>
+
+  <section id="cards" class="py-6">
+    <h2 class="text-2xl md:text-3xl font-black text-brand-800 mb-2 flex items-center gap-2">
+      <i class="fa-solid fa-list-check text-brand-500"></i> 逐項說明
+    </h2>
+    <p class="text-sm text-stone-500">依區域分組。每張卡片的黃色欄位是<strong>投票前值得知道的限制或陷阱</strong>。</p>
+    
+  <h3 class="text-xl font-black text-brand-800 mt-8 mb-3 flex items-center gap-2"><i class="fa-solid fa-location-dot text-brand-500"></i> 基隆</h3>
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-500 text-white text-sm font-black mr-2 align-middle shrink-0">1</span>和平島公園
+        </h3>
+        <span class="text-xs bg-rose-100 text-rose-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">基隆</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">22 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">2.5–3 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">世界級海蝕地質景觀、天然海水泳池、環山步道與望海咖啡館，是這趟唯一需要買票、也最值得慢慢待的景點。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> 11–4 月 08:00–18:00（<strong>17:00 停止售票</strong>）· 全年無休</p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 全票 120 元（敬老／學生 60、團體 96）</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed">門票<strong>不含</strong>岩石管制區與阿拉寶灣，那兩區需另外預約。冬季 17:00 就停售，下午去要抓好時間。</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">需門票</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">要 2.5 小時以上</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">有時間壓力</span></div>
+    </div>
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-stone-400 text-white text-sm font-black mr-2 align-middle shrink-0">2</span>正濱漁港彩色屋
+        </h3>
+        <span class="text-xs bg-rose-100 text-rose-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">基隆</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">20 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">30–60 分鐘</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">整排彩虹色房屋倒映在漁港水面，是基隆最上鏡的一處。就在和平島隔壁，5 分鐘車程。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> 戶外開放空間，無營業時間限制</p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 免費</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed">純拍照景點，停留時間短。與和平島幾乎同一區，兩者一起排最順。</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">免費</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">拍照為主</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">順路</span></div>
+    </div>
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-teal-600 text-white text-sm font-black mr-2 align-middle shrink-0">3</span>基隆廟口夜市
+        </h3>
+        <span class="text-xs bg-rose-100 text-rose-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">基隆</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">25 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">1.5–2 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">基隆最具代表性的小吃聚落，天婦羅、鼎邊趖、泡泡冰、營養三明治都在這。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> 仁三路固定攤 24 小時 · <strong>精華時段 17:00–23:00</strong> · 中午 12 點起有店家但攤位較少</p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 免費入場，小吃自費</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed"><strong>白天與晚上是不同店家用同一個攤位</strong>——中午去只吃得到另一半。要完整體驗必須傍晚後到。我們住九份，專程來回要多花約 50 分鐘車程。</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">免費</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">晚上才完整</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">需專程</span></div>
+    </div>
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-teal-600 text-white text-sm font-black mr-2 align-middle shrink-0">4</span>仁愛市場
+        </h3>
+        <span class="text-xs bg-rose-100 text-rose-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">基隆</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">25 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">1–1.5 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">一樓菜市場、二樓熟食與點心，咖哩炒麵、生魚片、手沖咖啡都有，是在地人的日常食堂。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> 整體 08:00–17:00（各店不同，<strong>不少店家週一公休</strong>）</p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 免費入場，小吃自費</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed"><strong>白天型態</strong>，17:00 就收，與廟口正好互補。我們 11/13 是週五，多數店家有開。</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">免費</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">白天限定</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">在地感</span></div>
+    </div>
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-teal-600 text-white text-sm font-black mr-2 align-middle shrink-0">5</span>海龍珠水產海鮮餐廳
+        </h3>
+        <span class="text-xs bg-rose-100 text-rose-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">基隆</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">35 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">1.5 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">活海鮮餐廳，螃蟹與龍蝦為招牌，附露台。Google 4.0★。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> 11:00–21:00（最後點餐 20:30）· 無午休</p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 合菜自費，9 人建議先訂桌</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed">⚠️ <strong>位置要更正</strong>：它在<strong>基隆安樂區基金三路 71-7 號</strong>，不在正濱漁港。與正濱漁港相距約 20 分鐘、方向相反；反而是在往萬里／金山的台 2 線上。02-2434-0066</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">餐廳</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">需訂位</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">位置已更正</span></div>
+    </div>
+  </div>
+  <h3 class="text-xl font-black text-brand-800 mt-8 mb-3 flex items-center gap-2"><i class="fa-solid fa-location-dot text-brand-500"></i> 瑞芳・九份</h3>
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-600 text-white text-sm font-black mr-2 align-middle shrink-0">6</span>九份老街
+        </h3>
+        <span class="text-xs bg-violet-100 text-violet-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">瑞芳・九份</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">步行 2 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">1.5–2 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">就在住處門口。阿柑姨芋圓、阿蘭草仔粿、魚丸伯仔、金枝紅糟肉圓都在這，晚上燈籠夜景是招牌畫面。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> 整體 08:00–19:00 · 小吃店家多開到 20:00–20:30，<strong>週六延長至 21:00</strong> · 19:00 後陸續打烊，之後只剩茶樓</p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 免費入場，小吃自費</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed"><strong>不佔白天時段</strong>——住這裡等於可以挑人最少的清晨或夜晚逛。反過來說，週六白天是全週人潮最高峰，反而不該安排。</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">免費</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">住處旁</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">可錯峰</span></div>
+    </div>
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-teal-600 text-white text-sm font-black mr-2 align-middle shrink-0">7</span>深澳鐵道自行車
+        </h3>
+        <span class="text-xs bg-violet-100 text-violet-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">瑞芳・九份</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">11 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">1–1.5 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">沿廢棄鐵道騎行至深澳，穿越彩繪山洞、看海景，單程 30 分鐘。平日假日場次相同。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> 八斗子發車 10:00 / 11:00 / 13:00 / 14:00 / 15:00 / 16:00 / <strong>17:00（末班）</strong>；09:00 那班不對外售票</p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 單程 150 元 / 來回 250 元</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed"><strong>需提前 15 分鐘完成報到，逾時不候</strong>。乘車日前 30 天的每日 00:00 開賣，網路單筆限 4 張，9 人要拆多筆。11/13（五）場次比 11/14（六）好搶很多。</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">需購票</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">需搶票</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">有場次限制</span></div>
+    </div>
+  </div>
+  <h3 class="text-xl font-black text-brand-800 mt-8 mb-3 flex items-center gap-2"><i class="fa-solid fa-location-dot text-brand-500"></i> 平溪</h3>
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-teal-600 text-white text-sm font-black mr-2 align-middle shrink-0">8</span>十分老街 · 放天燈
+        </h3>
+        <span class="text-xs bg-sky-100 text-sky-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">平溪</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">35 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">2–2.5 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">火車就從老街中間穿過，放天燈是這趟最有儀式感的體驗。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> 約 10:00–19:00／20:00 · <strong>平日攤販不一定到齊，週末才全員出動</strong></p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 天燈單色約 200 元、四色約 250 元</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed">停車空間有限。我們 11/14 是週六，攤販最齊。<strong>從九份來回約 70 分鐘車程</strong>，是目前所有景點裡時間成本第二高的。</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">需付費體驗</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">週末較完整</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">車程較遠</span></div>
+    </div>
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-stone-400 text-white text-sm font-black mr-2 align-middle shrink-0">9</span>十分瀑布
+        </h3>
+        <span class="text-xs bg-sky-100 text-sky-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">平溪</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">40 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">1–1.5 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">台灣最大簾幕式瀑布，有「小尼加拉瀑布」之稱，園區步道好走。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> 冬季（10–5 月）09:00–17:00，<strong>最後入場 16:30</strong></p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 免費</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed">距十分老街約 10 分鐘，通常與十分老街一起排。<strong>16:30 就停止入場</strong>，下午去別拖太晚。</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">免費</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">順路加點</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">有時間壓力</span></div>
+    </div>
+  </div>
+  <h3 class="text-xl font-black text-brand-800 mt-8 mb-3 flex items-center gap-2"><i class="fa-solid fa-location-dot text-brand-500"></i> 金山・北海岸</h3>
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-teal-600 text-white text-sm font-black mr-2 align-middle shrink-0">10</span>金山老街（金包里）
+        </h3>
+        <span class="text-xs bg-amber-100 text-amber-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">金山・北海岸</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">51 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">1.5–2 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">金包里鴨肉、烤地瓜、芋圓是招牌，老街保有清代街屋格局。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> 店家多在 18:00 前打烊（週末約 18:30）· <strong>金山小夜市：每週二、六 18:00 起</strong></p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 免費入場，小吃自費</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed"><strong>距九份 51 分鐘</strong>，是最遠的一組。安排在 D3 賦歸途中最順，專程來回不划算。</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">免費</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">距離最遠</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">D3 順路</span></div>
+    </div>
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-teal-600 text-white text-sm font-black mr-2 align-middle shrink-0">11</span>兄弟食堂
+        </h3>
+        <span class="text-xs bg-amber-100 text-amber-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">金山・北海岸</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">51 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">1–1.5 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">金山在地海鮮食堂，份量大、價格實在，回訪率高。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> 需致電確認</p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 合菜自費，9 人建議先訂桌</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed">⚠️ <strong>金山有兩間</strong>：金包里街上那間較小；<strong>民生路另有大店，附大型停車場（遊覽車可停）</strong>——我們 9 人 2 車建議訂民生路那間。</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">餐廳</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">需訂位</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">兩間要選對</span></div>
+    </div>
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-stone-400 text-white text-sm font-black mr-2 align-middle shrink-0">12</span>洋荳子咖啡館
+        </h3>
+        <span class="text-xs bg-amber-100 text-amber-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">金山・北海岸</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">55 分</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">1–1.5 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">金山海景第一排，地中海白色建築配大片落地窗，看海喝咖啡。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> ⚠️ <strong>來源不一致</strong>：一說平日 10:30–18:30／假日 09:30–19:00；另一說 11:00–18:00 且週一、二公休 —— <strong>務必先電話確認</strong></p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 飲品餐點自費</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed">地址：金山區忠義路 29-1 號，02-2408-2455。與金山老街同一區，D3 順路。</p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">咖啡廳</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">營業時間待確認</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">D3 順路</span></div>
+    </div>
+  </div>
+  <h3 class="text-xl font-black text-brand-800 mt-8 mb-3 flex items-center gap-2"><i class="fa-solid fa-location-dot text-brand-500"></i> 三芝</h3>
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="card-hover bg-white rounded-2xl border-2 border-stone-200 p-5">
+      <div class="flex items-start justify-between gap-2 flex-wrap">
+        <h3 class="font-black text-lg text-brand-800">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-stone-400 text-white text-sm font-black mr-2 align-middle shrink-0">13</span>我們在海邊
+        </h3>
+        <span class="text-xs bg-stone-100 text-stone-700 font-bold px-2 py-1 rounded-full whitespace-nowrap">三芝</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距九份車程</span><strong class="text-brand-700 text-sm">80 分以上</strong></div>
+        <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">建議停留</span><strong class="text-brand-700 text-sm">1.5–2 小時</strong></div>
+      </div>
+
+      <p class="text-sm text-stone-600 mt-3 leading-relaxed">海景咖啡館，網路討論度高。</p>
+
+      <div class="mt-3 space-y-1.5 text-xs text-stone-600">
+        <p><i class="fa-regular fa-clock text-brand-500 w-4"></i> <strong>全預約制</strong>，每人低消一份套餐（飲品＋甜點）</p>
+        <p><i class="fa-solid fa-ticket text-brand-500 w-4"></i> 套餐自費</p>
+      </div>
+
+      <p class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3 leading-relaxed">⚠️ <strong>位置要更正</strong>：它在<strong>三芝</strong>，不是金山。從金山還要再往西開 25–30 分鐘，等於 D3 賦歸路線要再往外繞一大圈。<strong>若要保留，D3 時間會非常緊。</strong></p>
+
+      <div class="flex flex-wrap gap-1.5 mt-3"><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">需預約</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">位置已更正</span><span class="text-xs bg-stone-100 text-stone-600 border border-stone-200 px-2 py-1 rounded-lg font-semibold">距離最遠</span></div>
+    </div>
+  </div>
+  </section>
+
+  <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-5 my-10">
+    <h2 class="font-black text-lg text-sky-800"><i class="fa-solid fa-road mr-1"></i> 海岸公路兜風候選（查證中）</h2>
+    <p class="text-sm text-stone-700 mt-2 leading-relaxed">
+      你提到希望多一點北海岸／東北角的公路兜風情境。住九份的好處是
+      <strong>102 縣道（瑞芳－九份－金瓜石－牡丹－雙溪，不厭亭在此）</strong>與
+      <strong>台 2 線濱海公路</strong>兩條經典路線都在門口。
+    </p>
+    <p class="text-sm text-stone-700 mt-2 leading-relaxed">
+      正在查證的候選包括：不厭亭、報時山觀景台、水湳洞十三層遺址、陰陽海、黃金瀑布、黃金博物館、
+      南雅奇岩、鼻頭角、龍洞灣、野柳地質公園、龜吼漁港。
+      <strong>資料齊了會補進這一頁</strong>，屆時可以一起納入投票。
+    </p>
+  </div>
+
+</main>
+
+<footer class="bg-stone-800 text-stone-300 py-8 mt-6">
+  <div class="max-w-5xl mx-auto px-4 text-sm">
+    <p class="font-bold text-white mb-1"><i class="fa-solid fa-square-poll-vertical mr-1"></i> 景點投票參考</p>
+    <p>2026/11/13（五）– 11/15（日） · 9 位大人 · 自駕 2 車 · 九份連住 2 晚（隱山居本館）</p>
+    <p class="text-brand-300 text-xs mt-3">營業時間與票價查證於 2026/08，出發前請再次確認。標註「需確認」者請務必先電話詢問。</p>
+    <p class="mt-3"><a href="index.html" class="underline hover:text-white"><i class="fa-solid fa-arrow-left mr-1"></i> 回行程主頁</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
