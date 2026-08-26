@@ -37,6 +37,9 @@
   @keyframes fade { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
   .card-hover { transition:transform .2s, box-shadow .2s; }
   .card-hover:hover { transform:translateY(-3px); box-shadow:0 18px 30px -18px rgba(15,118,110,.5); }
+  .stay-tip { background:#f59e0b; color:#fff; font-weight:800; border:2px solid #fff;
+              border-radius:8px; padding:2px 8px; font-size:12px; box-shadow:0 2px 8px rgba(0,0,0,.35); }
+  .stay-tip::before { border-right-color:#f59e0b !important; }
 </style>
 </head>
 <body class="font-sans text-stone-800">
@@ -323,17 +326,17 @@
 <!-- ===== 地圖：民宿與景點位置 ===== -->
 <section id="map" class="py-10">
   <h2 class="text-2xl md:text-3xl font-black text-brand-800 mb-2 flex items-center gap-2">
-    <i class="fa-solid fa-map-pin text-brand-500"></i> 候選民宿與景點地圖
+    <i class="fa-solid fa-map-pin text-brand-500"></i> 住宿與景點地圖
   </h2>
   <p class="text-sm text-stone-500 mb-4">
-    住宿（金色圓形）與行程主要景點（方形，依天數上色）。點擊圖示看詳情，可縮放與拖曳。<br>
+    <strong class="text-amber-700">🏠 金色大圓＝我們的住宿（隱山居，九份）</strong>；方形為行程主要景點，依天數上色。點擊圖示看詳情，可縮放與拖曳。<br>
     <i class="fa-solid fa-circle-info mr-1"></i> 七間候選的比較地圖已移至 <a href="stays.html" class="text-brand-600 underline font-semibold">民宿比較頁</a>。
   </p>
 
   <div id="tripmap" class="rounded-2xl border-2 border-stone-200 overflow-hidden" style="height:460px"></div>
 
   <div class="flex flex-wrap gap-3 mt-3 text-xs">
-    <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-amber-500 border-2 border-white ring-1 ring-stone-300 inline-block"></span>隱山居（住宿）</span>
+    <span class="inline-flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-amber-500 border-2 border-white ring-1 ring-stone-300 inline-block"></span><strong>🏠 隱山居（我們的住宿）</strong></span>
     <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-sm bg-rose-500 border-2 border-white ring-1 ring-stone-300 inline-block"></span>D1 基隆・和平島</span>
     <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-sm bg-violet-600 border-2 border-white ring-1 ring-stone-300 inline-block"></span>D2 深澳・九份・十分</span>
     <span class="inline-flex items-center gap-1.5"><span class="w-4 h-4 rounded-sm bg-sky-600 border-2 border-white ring-1 ring-stone-300 inline-block"></span>D3 金山</span>
@@ -572,10 +575,10 @@
   function dot(color, label, ring) {
     return L.divIcon({
       className: '',
-      html: '<div style="background:' + color + ';width:26px;height:26px;border-radius:50%;border:3px solid #fff;'
-          + 'box-shadow:0 2px 6px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;'
-          + 'color:#fff;font-weight:900;font-size:12px' + (ring ? ';outline:3px solid ' + ring : '') + '">' + label + '</div>',
-      iconSize: [26,26], iconAnchor: [13,13], popupAnchor: [0,-14]
+      html: '<div style="background:' + color + ';width:38px;height:38px;border-radius:50%;border:4px solid #fff;'
+          + 'box-shadow:0 3px 10px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;'
+          + 'color:#fff;font-weight:900;font-size:15px' + (ring ? ';outline:4px solid ' + ring : '') + '">' + label + '</div>',
+      iconSize: [38,38], iconAnchor: [19,19], popupAnchor: [0,-20]
     });
   }
   function square(color, label) {
@@ -591,8 +594,9 @@
   var all = [];
   stays.forEach(function (s, i) {
     var color = s.top ? '#f59e0b' : (s.far ? '#e11d48' : '#0d9488');
-    L.marker([s.lat, s.lon], {icon: dot(color, '宿', s.top ? 'rgba(245,158,11,.3)' : null)})
+    L.marker([s.lat, s.lon], {icon: dot(color, '🏠', s.top ? 'rgba(245,158,11,.35)' : null), zIndexOffset: 2000, riseOnHover: true})
      .addTo(map)
+     .bindTooltip('隱山居（住宿）', {permanent: true, direction: 'right', offset: [16, 0], className: 'stay-tip'})
      .bindPopup('<b style="font-size:14px">' + s.n + '</b>'
               + (s.approx ? ' <span style="color:#78716c;font-size:11px">(概略)</span>' : '')
               + '<br><span style="font-size:12px;line-height:1.6">' + s.d + '</span>');
