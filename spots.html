@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>景點投票參考 · 基隆北海岸 2026/11/13–15</title>
+<title>沿路景點參考 · 基隆北海岸 2026/11/13–15</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -51,7 +51,7 @@
     </a>
     <div class="flex items-center gap-4 text-sm font-medium text-stone-600">
       <a href="#spotmap" class="hover:text-brand-600">地圖</a>
-      <a href="#table" class="hover:text-brand-600">投票清單</a>
+      <a href="#table" class="hover:text-brand-600">主要景點</a>
       <a href="#stops" class="hover:text-brand-600">順遊點</a>
     </div>
   </div>
@@ -61,21 +61,21 @@
   <div class="absolute inset-0 bg-gradient-to-br from-brand-600 via-brand-700 to-brand-900"></div>
   <div class="relative max-w-5xl mx-auto px-4 py-12 text-white">
     <p class="inline-flex items-center gap-2 bg-white/15 backdrop-blur px-3 py-1 rounded-full text-sm font-medium mb-4">
-      <i class="fa-solid fa-square-poll-vertical"></i> 投票用
+      <i class="fa-solid fa-map-location-dot"></i> 沿路參考
     </p>
-    <h1 class="text-3xl md:text-4xl font-black leading-tight mb-3">景點投票 · 12 選幾</h1>
+    <h1 class="text-3xl md:text-4xl font-black leading-tight mb-3">沿路景點參考 · 主線以外想加的點</h1>
     <p class="text-brand-100 text-base max-w-2xl leading-relaxed">
-      2026/11/13–15，9 位大人、自駕 2 車、住九份隱山居。<br>
-      投票清單只放<strong class="text-white">需要待 1 小時以上、且值得專程去</strong>的景點，共 <strong class="text-white">12 個</strong>。
-      沿途順手停個 20–40 分鐘的點另外列在下面，<strong class="text-white">排行程時再當臨時動議</strong>，不佔投票額度。
+      2026/11/13–15，9 位大人、自駕 2 車、住九份隱山居。主線與五餐已在<a href="index.html" class="underline font-semibold text-white">行程頁</a>定案。<br>
+      這頁放的是<strong class="text-white">值得專程去的 12 個景點</strong>（其中 6 個已在主線）與 <strong class="text-white">8 個順遊短停點</strong>，每個都附距住宿車程、建議停留、官方網站與推薦文，<strong class="text-white">當天看時間、天氣、體力決定要不要加</strong>。
     </p>
-    <div class="mt-5 bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4">
-      <p class="font-bold text-white text-sm mb-1"><i class="fa-solid fa-circle-info mr-1"></i> 大概能選幾個？</p>
-      <p class="text-sm text-brand-50 leading-relaxed">
-        D1 中午才從南港出發、D3 下午要還車，實際可用約<strong class="text-white">兩個整天多一點</strong>。
-        以悠閒為前提，這 12 個裡<strong class="text-white">選 5–6 個</strong>剛好；想再鬆一點就選 4–5 個。
-        <strong class="text-white">3 號九份老街不必投</strong>——它就在住處門口、晚上或清晨隨時能逛，不佔白天額度。
-      </p>
+    <div class="mt-5 bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 text-sm leading-relaxed">
+      <p class="font-bold mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> 怎麼用這一頁</p>
+      <ul class="list-disc list-inside space-y-1 text-brand-100">
+        <li><strong class="text-white">綠標「主線 Dn」</strong>＝已排進行程，不用再考慮。</li>
+        <li><strong class="text-white">「沿路可加」</strong>＝看「距住宿車程 ×2 ＋ 建議停留」估它會吃掉多少時間，再對照當天進度。</li>
+        <li>順遊點 S1–S8 多在住處 12 分鐘內，是零成本的加點；S1、S2 共用同一個免費停車場。</li>
+        <li>每張卡最下方有<strong class="text-white">官方網站</strong>與<strong class="text-white">推薦文</strong>連結，要去前點開看最新公告。</li>
+      </ul>
     </div>
   </div>
 </header>
@@ -99,7 +99,7 @@
       <i class="fa-solid fa-map-location-dot text-brand-500"></i> 位置地圖
     </h2>
     <p class="text-sm text-stone-500 mb-4">
-      <strong class="text-amber-700">🏠 金色大圓＝住宿</strong>｜<strong>彩色數字 1–12＝投票景點</strong>｜灰色 S1–S8＝順遊點｜紅色叉子＝餐廳。點擊看名稱與直線距離。
+      <strong class="text-amber-700">🏠 金色大圓＝住宿</strong>｜<strong>彩色數字 1–12＝主要景點</strong>｜灰色 S1–S8＝順遊點｜紅色叉子＝餐廳。點擊看名稱與直線距離。
     </p>
     <div id="spotsmap" class="rounded-2xl border-2 border-stone-200 overflow-hidden" style="height:520px"></div>
     <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4 mt-4">
@@ -114,9 +114,9 @@
 
   <section id="table" class="py-6">
     <h2 class="text-2xl md:text-3xl font-black text-brand-800 mb-2 flex items-center gap-2">
-      <i class="fa-solid fa-square-poll-vertical text-brand-500"></i> 投票清單（12 個）
+      <i class="fa-solid fa-map-pin text-brand-500"></i> 主要景點（12 個）· 主線已排 6 個，其餘 6 個沿路可加
     </h2>
-    <p class="text-sm text-stone-500 mb-4"><strong class="text-emerald-700">行程 v1.0 已排入 6 個</strong>（卡片上有綠色標記）。投票是決定<strong>要不要把「未排入」的換進來、或把「已排入」的拿掉</strong>，票數高的優先調整。<br>車程為由住宿出發的單程推估值。「距住宿車程 ×2 ＋ 建議停留」就是它會吃掉的時間。</p>
+    <p class="text-sm text-stone-500 mb-4"><strong class="text-emerald-700">主線已排入 6 個</strong>（綠色標記）。其餘 6 個是<strong>沿路想加時的選項</strong>，當天視天氣與體力決定。<br>車程為由住宿出發的單程推估值。「距住宿車程 ×2 ＋ 建議停留」就是它會吃掉的時間。</p>
     <div class="overflow-x-auto -mx-1 px-1">
       <table class="w-full text-sm border-collapse min-w-[680px]">
         <thead>
@@ -223,7 +223,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#f43f5e">1</span>和平島公園
         </h3>
-        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> v1 已排入 D1</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">基隆</span>
+        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> 主線 D1</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">基隆</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">22 分</strong></div>
@@ -246,7 +246,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#f43f5e">2</span>基隆廟口夜市
         </h3>
-        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> v1 已排入 D1</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">基隆</span>
+        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> 主線 D1</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">基隆</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">25 分</strong></div>
@@ -269,7 +269,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#7c3aed">3</span>九份老街
         </h3>
-        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> v1 已排入 D1</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">瑞芳</span>
+        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> 主線 D1</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">瑞芳</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">步行 2 分</strong></div>
@@ -292,7 +292,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#7c3aed">4</span>深澳鐵道自行車
         </h3>
-        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">v1 未排入</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">瑞芳</span>
+        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">沿路可加</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">瑞芳</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">11 分</strong></div>
@@ -315,7 +315,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#059669">5</span>黃金博物館
         </h3>
-        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">v1 未排入</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">金瓜石</span>
+        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">沿路可加</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">金瓜石</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">7 分</strong></div>
@@ -338,7 +338,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#0284c7">6</span>十分老街 · 放天燈
         </h3>
-        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> v1 已排入 D2</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">平溪</span>
+        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> 主線 D2</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">平溪</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">35 分</strong></div>
@@ -361,7 +361,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#0284c7">7</span>十分瀑布
         </h3>
-        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> v1 已排入 D2</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">平溪</span>
+        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> 主線 D2</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">平溪</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">40 分</strong></div>
@@ -384,7 +384,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#0891b2">8</span>鼻頭角步道
         </h3>
-        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">v1 未排入</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">東北角</span>
+        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">沿路可加</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">東北角</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">23 分</strong></div>
@@ -407,7 +407,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#0891b2">9</span>龍洞灣岬步道
         </h3>
-        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">v1 未排入</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">東北角</span>
+        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">沿路可加</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">東北角</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">27 分</strong></div>
@@ -430,7 +430,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#d97706">10</span>野柳地質公園
         </h3>
-        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">v1 未排入</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">北海岸</span>
+        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">沿路可加</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">北海岸</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">46 分</strong></div>
@@ -453,7 +453,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#d97706">11</span>龜吼漁夫市集
         </h3>
-        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">v1 未排入</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">北海岸</span>
+        <span class="text-xs bg-stone-200 text-stone-500 font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1">沿路可加</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">北海岸</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">42 分</strong></div>
@@ -476,7 +476,7 @@
         <h3 class="font-black text-lg text-brand-800">
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-base font-black mr-2 align-middle shrink-0" style="background:#f59e0b">12</span>金山老街（金包里）
         </h3>
-        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> v1 已排入 D3</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">金山</span>
+        <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-1 rounded-full whitespace-nowrap mr-1"><i class="fa-solid fa-check mr-0.5"></i> 主線 D3</span><span class="text-xs bg-stone-100 text-stone-600 font-bold px-2 py-1 rounded-full whitespace-nowrap">金山</span>
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div class="bg-stone-50 rounded-lg px-3 py-2"><span class="text-stone-500 block">距住宿車程</span><strong class="text-brand-700 text-sm">51 分</strong></div>
@@ -499,10 +499,10 @@
 
   <section id="stops" class="py-10">
     <h2 class="text-2xl md:text-3xl font-black text-stone-700 mb-2 flex items-center gap-2">
-      <i class="fa-solid fa-camera text-stone-500"></i> 順遊點（不投票）
+      <i class="fa-solid fa-camera text-stone-500"></i> 順遊點（短停 20–40 分）
     </h2>
     <p class="text-sm text-stone-500 mb-4">
-      這些是<strong>停留 20–40 分鐘、順路就能加</strong>的點。不佔投票額度，<strong>等行程排定後再視當天時間與天氣當臨時動議</strong>。
+      這些是<strong>停留 20–40 分鐘、順路就能加</strong>的點。<strong>當天視時間與天氣當臨時動議</strong>。
       其中 S1–S4 全在住處 12 分鐘內、且 S1 與 S2 共用同一個免費停車場，幾乎是零成本的加點。
     </p>
     <div class="grid md:grid-cols-2 gap-4">
@@ -599,9 +599,9 @@
 
   <section class="pb-10">
     <h2 class="text-2xl md:text-3xl font-black text-stone-700 mb-2 flex items-center gap-2">
-      <i class="fa-solid fa-utensils text-rose-500"></i> 餐廳（不投票，已隨行程定案）
+      <i class="fa-solid fa-utensils text-rose-500"></i> 餐廳（已定案）
     </h2>
-    <p class="text-sm text-stone-500 mb-4">吃哪家取決於那天人在哪，不是「值不值得去」的問題，所以不放進投票。<strong>五餐都需要 9 人桌，全部要先訂位。</strong></p>
+    <p class="text-sm text-stone-500 mb-4">五餐隨主線定案，吃哪家取決於那天人在哪。<strong>都需要 9 人桌，全部要先訂位。</strong></p>
     <div class="grid md:grid-cols-2 gap-4">
       <div class="bg-white rounded-xl border border-stone-200 p-4">
         <div class="flex items-baseline justify-between gap-2 flex-wrap">
@@ -655,7 +655,7 @@
 
 <footer class="bg-stone-800 text-stone-300 py-8">
   <div class="max-w-5xl mx-auto px-4 text-sm">
-    <p class="font-bold text-white mb-1"><i class="fa-solid fa-square-poll-vertical mr-1"></i> 景點投票參考</p>
+    <p class="font-bold text-white mb-1"><i class="fa-solid fa-map-location-dot mr-1"></i> 沿路景點參考</p>
     <p>2026/11/13（五）– 11/15（日） · 9 位大人 · 自駕 2 車 · 九份連住 2 晚（隱山居本館）</p>
     <p class="text-brand-300 text-xs mt-3">營業時間與票價查證於 2026/08，出發前請再次確認。氣象署官方日落 17:06——海岸與步道景點須 16:30 前收工。</p>
     <p class="mt-3"><a href="index.html" class="underline hover:text-white"><i class="fa-solid fa-arrow-left mr-1"></i> 回行程主頁</a></p>
@@ -725,7 +725,7 @@
     }).addTo(map)
       .bindPopup('<b style="font-size:14px">' + p.n + '. ' + p.t + '</b><br>'
                + '<span style="font-size:12px">距住宿直線 ' + p.km + ' km · '
-               + (p.tier === 'v' ? '投票景點' : (p.tier === 's' ? '順遊點' : '餐廳')) + '</span>');
+               + (p.tier === 'v' ? '主要景點' : (p.tier === 's' ? '順遊點' : '餐廳')) + '</span>');
     all.push([p.lat, p.lon]);
   });
 
