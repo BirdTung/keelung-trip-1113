@@ -32,7 +32,7 @@
     content:''; position:absolute; left:19px; top:8px; bottom:-8px;
     width:2px; background:linear-gradient(#5eead4,#e7e5e4);
   }
-  .tab-active { background:#0f766e; color:#fff; box-shadow:0 8px 20px -8px rgba(15,118,110,.6); }
+  .tab-btn.tab-active { background:#0f766e !important; color:#fff !important; box-shadow:0 8px 20px -8px rgba(15,118,110,.6); }
   .fade-in { animation: fade .4s ease; }
   @keyframes fade { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
   .card-hover { transition:transform .2s, box-shadow .2s; }
@@ -1065,8 +1065,8 @@
   const panels = document.querySelectorAll('.tab-panel');
   tabs.forEach(btn => btn.addEventListener('click', () => {
     const id = btn.dataset.tab;
-    tabs.forEach(b => { b.classList.remove('tab-active'); b.classList.add('text-stone-600'); });
-    btn.classList.add('tab-active'); btn.classList.remove('text-stone-600');
+    tabs.forEach(b => { b.classList.remove('tab-active'); b.classList.add('text-stone-600', 'bg-stone-100'); });
+    btn.classList.add('tab-active'); btn.classList.remove('text-stone-600', 'bg-stone-100');
     panels.forEach(p => {
       if (p.dataset.panel === id) { p.classList.remove('hidden'); p.classList.add('fade-in'); }
       else { p.classList.add('hidden'); p.classList.remove('fade-in'); }
