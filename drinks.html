@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>飲料店地圖 · 基隆北海岸三天兩夜 2026/11/13–15</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] },
+        colors: {
+          brand: {
+            50:'#f0fdfa',100:'#ccfbf1',200:'#99f6e4',300:'#5eead4',
+            400:'#2dd4bf',500:'#14b8a6',600:'#0d9488',700:'#0f766e',
+            800:'#115e59',900:'#134e4a'
+          }
+        }
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background-color: #fafaf9; }
+  .chip { border:1px solid #d6d3d1; background:#fff; color:#57534e; border-radius:9999px; padding:4px 12px; font-size:12px; font-weight:700; cursor:pointer; transition:all .15s; white-space:nowrap; }
+  .chip:hover { border-color:#f59e0b; color:#b45309; }
+  .chip.on { background:#d97706; border-color:#d97706; color:#fff; box-shadow:0 6px 16px -8px rgba(217,119,6,.7); }
+  .stop-pin { width:12px; height:12px; background:#78716c; border:2px solid #fff; border-radius:3px; box-shadow:0 0 0 1px #a8a29e; }
+  .home-pin { width:18px; height:18px; background:#f59e0b; border:3px solid #fff; border-radius:9999px; box-shadow:0 0 0 1px #a8a29e; }
+  .leaflet-popup-content { margin:10px 12px; font-size:13px; line-height:1.5; }
+  .leaflet-popup-content a.btn { display:inline-block; margin-top:4px; margin-right:4px; padding:2px 8px; border-radius:6px; font-size:12px; font-weight:700; text-decoration:none; }
+  .row { display:grid; grid-template-columns: 1.4rem minmax(0,1fr) auto; gap:.25rem .5rem; align-items:start; padding:.55rem 0; border-top:1px solid #f5f5f4; }
+  .row:first-child { border-top:0; }
+  .tag { display:inline-block; font-size:10px; font-weight:700; padding:1px 6px; border-radius:4px; color:#fff; vertical-align:middle; }
+</style>
+</head>
+<body class="font-sans text-stone-800">
+
+<nav class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-stone-200">
+  <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2 font-black text-brand-700">
+      <i class="fa-solid fa-arrow-left text-brand-500"></i><span>回行程主頁</span>
+    </a>
+    <div class="flex items-center gap-4 text-sm font-medium text-stone-600">
+      <a href="#drinkmap" class="hover:text-amber-700">地圖</a>
+      <a href="#areas" class="hover:text-amber-700">各區清單</a>
+      <a href="#tips" class="hover:text-amber-700">提醒</a>
+    </div>
+  </div>
+</nav>
+
+<header class="relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-amber-500 via-orange-600 to-amber-900"></div>
+  <div class="relative max-w-5xl mx-auto px-4 py-12 text-white">
+    <p class="inline-flex items-center gap-2 bg-white/15 backdrop-blur px-3 py-1 rounded-full text-sm font-medium mb-4">
+      <i class="fa-solid fa-mug-hot"></i> 飲料店地圖
+    </p>
+    <h1 class="text-3xl md:text-4xl font-black leading-tight mb-3">飲料店地圖 · 沿路哪裡買飲料</h1>
+    <p class="text-amber-50 text-base max-w-2xl leading-relaxed">
+      2026/11/13–15，9 位大人、自駕 2 車、住九份隱山居。每個停留點<strong class="text-white">步行範圍內的手搖、果汁、冰品與茶館</strong>，附 Google 星數、當天營業到幾點、電話與導航。
+      臨時想喝，按各區的「<strong class="text-white">Google 即時搜尋</strong>」看最新的營業中店家。
+    </p>
+    <div id="tips" class="mt-5 bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 text-sm leading-relaxed">
+      <p class="font-bold mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> 先知道這幾件事</p>
+      <ul class="list-disc list-inside space-y-1 text-amber-50">
+        <li><strong class="text-white">連鎖手搖集中在三個地方</strong>：基隆廟口、瑞芳站前、金山中山路。九份、十分、雙溪、金瓜石、野柳都沒有連鎖店，只有在地小店與茶館。</li>
+        <li><strong class="text-white">九份晚上 19:00–20:00 以後沒有飲料店</strong>，只剩汽車路的超商。兩晚想喝的，D1 在基隆廟口、D2 在瑞芳站前買好帶上山（50嵐、CoCo、迷客夏、水雲朵在車站前同一排）。</li>
+        <li><strong class="text-white">十分老街的攤商 17:00–17:30 收</strong>，去瀑布前先買；金山老街的小店 18:00–19:30 收，之後走到中山路的 50嵐、CoCo（開到 21:30–22:00）。</li>
+        <li><strong class="text-white">D3 早上金瓜石沒有手搖店</strong>，咖啡館多半 11:00 才開；只有祈堂老街的山頂豆花週日 09:00 有開。</li>
+        <li>星數只是參考：同一連鎖各分店差很多（清心福全三家分店都 3.0★ 以下），★ 是每區的優先推薦。</li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4">
+
+<section id="drinkmap" class="py-8">
+  <h2 class="text-2xl md:text-3xl font-black text-stone-700 mb-2 flex items-center gap-2">
+    <i class="fa-solid fa-map-location-dot text-amber-600"></i> 地圖
+  </h2>
+  <p class="text-sm text-stone-500 mb-3">點上方區域可只看那一區並放大；<strong class="text-amber-700">圓點＝飲料店</strong>（顏色是類型，有白框的大圓＝優先推薦），<strong>灰色方塊＝行程停留點</strong>，金色圓＝住宿。點圓點看星數、營業時間與導航。</p>
+  <div id="chips" class="flex flex-wrap gap-2 mb-3"></div>
+  <div id="map" class="rounded-2xl border-2 border-stone-200 overflow-hidden" style="height:480px"></div>
+  <div class="flex flex-wrap gap-x-4 gap-y-2 mt-3 text-xs text-stone-600">
+    <span class="inline-flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full inline-block" style="background:#0d9488"></span>連鎖手搖</span>
+    <span class="inline-flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full inline-block" style="background:#d97706"></span>在地手搖・果汁</span>
+    <span class="inline-flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full inline-block" style="background:#e11d48"></span>冰品・甜品</span>
+    <span class="inline-flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full inline-block" style="background:#78350f"></span>茶館・咖啡</span>
+    <span class="inline-flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full inline-block" style="background:#57534e"></span>超商</span>
+    <span class="inline-flex items-center gap-1.5"><span class="stop-pin inline-block"></span>行程停留點</span>
+    <span class="inline-flex items-center gap-1.5"><span class="home-pin inline-block" style="width:14px;height:14px;border-width:2px"></span>隱山居（住宿）</span>
+  </div>
+</section>
+
+<section id="areas" class="pb-10">
+  <h2 class="text-2xl md:text-3xl font-black text-stone-700 mb-2 flex items-center gap-2">
+    <i class="fa-solid fa-list-ul text-amber-600"></i> 各區清單
+  </h2>
+  <p class="text-sm text-stone-500 mb-4">依行程順序排列。「距離」是從該區停留點算的直線距離。營業時間：有標星期的（如「六 09:00–18:00」）是該店逐日時段裡我們去的那一天；只標「～21:00」的是 Google 11/09 顯示的當日打烊時間，連鎖手搖店每天大多一樣，到店前可按「地圖」看即時狀態。</p>
+  <div id="list" class="space-y-5"></div>
+</section>
+
+</main>
+
+<footer class="bg-stone-800 text-stone-300 py-8">
+  <div class="max-w-5xl mx-auto px-4 text-sm">
+    <p class="font-bold text-white mb-1"><i class="fa-solid fa-mug-hot mr-1"></i> 飲料店地圖</p>
+    <p>2026/11/13（五）– 11/15（日） · 9 位大人 · 自駕 2 車 · 九份連住 2 晚（隱山居本館）</p>
+    <p class="text-amber-200/80 text-xs mt-3">店家資料查證於 2026/11/09（Google 地圖商家頁）。小店可能臨時休息，出發前或到店前再按「地圖」確認；想喝沒列出的店，用各區「Google 即時搜尋」。</p>
+    <p class="mt-3"><a href="index.html" class="underline hover:text-white"><i class="fa-solid fa-arrow-left mr-1"></i> 回行程主頁</a>　<a href="spots.html" class="underline hover:text-white">沿路參考</a>　<a href="stays.html" class="underline hover:text-white">民宿比較</a></p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+  var TYPES = {
+    chain: { label: '連鎖手搖', color: '#0d9488' },
+    local: { label: '在地手搖・果汁', color: '#d97706' },
+    ice:   { label: '冰品・甜品', color: '#e11d48' },
+    tea:   { label: '茶館・咖啡', color: '#78350f' },
+    cvs:   { label: '超商', color: '#57534e' }
+  };
+
+  var AREAS = [
+    { id:'ng',  day:'D1・D3', name:'南港（取車・還車・等高鐵）', anchor:'南港車站／格上租車', lat:25.05311, lon:121.60692,
+      tip:'D1 10:10 下高鐵就轉捷運去格上，沒時間逛；D3 14:35 還車後到南港車站等 16:10 高鐵，車站裡的 50嵐 最順手。格上斜對面中信園區 3 樓有龜記，LaLaport 距格上 350 m。' },
+    { id:'kl',  day:'D1 晚', name:'基隆廟口', anchor:'基隆廟口夜市（仁三路）', lat:25.1286, lon:121.7429,
+      tip:'周邊連鎖最齊：50嵐就在愛四路口，初韻、水雲朵評價最高但要走出夜市 3–5 分鐘。廟口吃完要帶上九份的飲料在這裡買，九份晚上沒得買。' },
+    { id:'hp',  day:'D1 午後', name:'和平島・正濱漁港', anchor:'海宴海產店／和平島公園', lat:25.1556424, lon:121.7698253,
+      tip:'海產街上有一攤耶穌愛喝茶，吃完海宴順手買；島上有冰在過橋前（週一～三休，週五有開）。要連鎖的過橋回市區，海洋大學對面那排有 CoCo、得正。' },
+    { id:'jf',  day:'兩晚・D2 早', name:'九份老街・隱山居周邊', anchor:'隱山居（輕便路280-1號）', lat:25.109270, lon:121.844121,
+      tip:'沒有連鎖手搖，只有老街入口的幸福堂與幾家在地茶飲；強項是茶館——水心月、淂藝洋行就在民宿同一條輕便路上，想坐下來喝茶看海選這兩家。D2 08:30 清晨場時店家多半還沒開（茶館 10:00–11:00 起）。' },
+    { id:'rf',  day:'D1 採買・D2 晚', name:'瑞芳站前', anchor:'瑞芳美食廣場（民生街35巷2號）', lat:25.1068421, lon:121.8056816,
+      tip:'車站前民生街＋明燈路三段同一排：水雲朵、CoCo、COMEBUY、50嵐、迷客夏、五道口，走路 1–2 分。D2 晚吃完豐味肉羹，在這裡把兩車的飲料買齊再上山。' },
+    { id:'sx',  day:'D2 午', name:'雙溪', anchor:'蘇義興餐廳（中華路77號）', lat:25.0383208, lon:121.8656852,
+      tip:'小鎮沒有手搖連鎖。蘇義興走路 1 分鐘的謝謝您冰品有剉冰和飲料，隔壁就是 7-ELEVEN。' },
+    { id:'sf',  day:'D2 午後', name:'十分老街', anchor:'十分老街（十分街）', lat:25.0430, lon:121.7756,
+      tip:'都是老街裡的攤位，人氣最高是飲嚐品；攤商 17:00–17:30 收，15:00 去瀑布前先買好。' },
+    { id:'jgs', day:'D3 早', name:'金瓜石・水湳洞', anchor:'報時山停車場（勸濟堂）', lat:25.1137, lon:121.8596,
+      tip:'沒有手搖店，咖啡館 11:00 才開。09:10 報時山下來只有祈堂老街的山頂豆花有開（週六日 09:00 起）；想喝手搖的 08:00 在九份超商先買，或到金山再買。' },
+    { id:'js',  day:'D3 午', name:'金山老街', anchor:'金包里鴨肉ㄜ（金包里街104號）', lat:25.2219698, lon:121.6383848,
+      tip:'老街裡的 Jelly Belly、華芝香檸檬是在地果飲；要連鎖的走到老街口外的中山路，50嵐、CoCo 開到 21:30–22:00。12:45 去獅頭山的路上有 Triple Two。' },
+    { id:'yl',  day:'D3 備案', name:'野柳', anchor:'野柳地質公園入口（港東路）', lat:25.2055, lon:121.6895,
+      tip:'港東路上幾家冰店與果汁吧，周董是最靠近地質公園入口的一家；沒有連鎖手搖。' }
+  ];
+
+  // star: 優先推薦；h: 我們去的那天的時段（有星期字）或 Google 當日打烊時間（～）
+  var SHOPS = [
+    // 南港
+    { a:'ng', star:1, n:'50嵐 南港CITYLINK店', t:'chain', lat:25.0525582, lon:121.604518, r:4.8, c:90, addr:'忠孝東路七段369號 B棟1樓（南港車站 CITYLINK）', h:'～21:30', tel:'02-2651-5850', note:'回程 14:35 還車後等 16:10 高鐵，就在車站裡' },
+    { a:'ng', n:'不夜侯製茶所 南港店', t:'local', lat:25.0544439, lon:121.6060012, r:4.3, c:484, addr:'南港路二段6號1樓', h:'～20:00', tel:'02-2788-9228', note:'車站北側，走路 3 分' },
+    { a:'ng', n:'龜記茗品 南港中信店', t:'chain', lat:25.0588492, lon:121.6149328, r:4.0, c:327, addr:'經貿二路186號 C棟3樓（中信金融園區）', h:'～21:00', tel:'02-2653-3331', note:'格上租車斜對面，取車前 10 分鐘可買' },
+    { a:'ng', n:'馬祖新村 南港LaLaport店', t:'local', lat:25.0593449, lon:121.6175825, r:4.8, c:410, addr:'經貿二路131號 B1（LaLaport）', h:'～21:30', tel:'02-2653-0065', note:'距格上 350 m' },
+    { a:'ng', n:'大茗本位製茶堂 南港LaLaport店', t:'chain', lat:25.0593449, lon:121.6175825, r:4.0, c:244, addr:'經貿二路131號 B1（LaLaport）', h:'～21:00', tel:'02-2653-8383', note:'' },
+    { a:'ng', n:'8酵茶 南港店', t:'local', lat:25.055561, lon:121.6129529, r:4.9, c:1025, addr:'興東街3號', h:'～21:00', tel:'02-2788-5590', note:'南港軟體園區旁，這一區評價最高' },
+    { a:'ng', n:'麻古茶坊 南港軟體園區店', t:'chain', lat:25.0556789, lon:121.6127783, r:4.0, c:323, addr:'興東街7-2號', h:'～21:30', tel:'02-2788-8190', note:'8酵茶隔壁' },
+    { a:'ng', n:'50嵐 南港園區店', t:'chain', lat:25.0554834, lon:121.61369, r:3.9, c:599, addr:'南港路一段116號1樓', h:'～22:00', tel:'02-2782-2018', note:'' },
+    // 基隆廟口
+    { a:'kl', star:1, n:'TrueWin 初韻 基隆廟口店', t:'chain', lat:25.1300381, lon:121.7444376, r:4.7, c:1784, addr:'仁一路321號', h:'～22:00', tel:'02-2428-2421', note:'廟口周邊評價最高的連鎖，夜市走出去 3 分' },
+    { a:'kl', star:1, n:'DrinkStore 水雲朵 基隆義二店', t:'chain', lat:25.1310143, lon:121.7454587, r:4.6, c:2271, addr:'義二路26號', h:'～22:00', tel:'02-2426-1227', note:'評論數最多' },
+    { a:'kl', star:1, n:'50嵐 基隆廟口店', t:'chain', lat:25.1278867, lon:121.7431885, r:4.0, c:621, addr:'愛四路1號', h:'～22:00', tel:'02-2421-1682', note:'就在夜市愛四路口，最近' },
+    { a:'kl', n:'廖媽媽珍珠奶茶專賣鋪', t:'local', lat:25.1309443, lon:121.7399409, r:3.7, c:2603, addr:'孝三路84號2樓', h:'～21:30', tel:'02-2423-0398', note:'基隆老字號，酸梅湯、珍奶；評價兩極' },
+    { a:'kl', n:'拎茶 Lin Cha 基隆站前店', t:'local', lat:25.1314346, lon:121.7394607, r:4.9, c:711, addr:'孝四路30號', h:'～21:00', tel:'02-2425-1880', note:'火車站前' },
+    { a:'kl', n:'唯果手作茶飲', t:'local', lat:25.129988, lon:121.7415534, r:4.8, c:188, addr:'愛一路55號', h:'～01:00', tel:'0905-708-988', note:'開最晚' },
+    { a:'kl', n:'思茶 MissingTea 基隆廟口店', t:'local', lat:25.1282023, lon:121.7456328, r:4.7, c:185, addr:'仁二路157號', h:'～20:30', tel:'02-2425-1115', note:'' },
+    { a:'kl', n:'龜記茗品 基隆廟口店', t:'chain', lat:25.128429, lon:121.7427642, r:4.1, c:315, addr:'愛三路68號1樓', h:'～22:00', tel:'02-2425-8889', note:'' },
+    { a:'kl', n:'CoCo 都可 基隆廟口店', t:'chain', lat:25.1275964, lon:121.7422049, r:3.9, c:164, addr:'愛三路28號', h:'～21:15', tel:'02-2425-6566', note:'' },
+    { a:'kl', n:'麻古茶坊 基隆仁三店', t:'chain', lat:25.1286708, lon:121.7425815, r:3.8, c:151, addr:'仁三路47號', h:'～22:00', tel:'02-2990-5959', note:'夜市裡' },
+    { a:'kl', n:'可不可熟成紅茶 基隆孝一店', t:'chain', lat:25.1304093, lon:121.7415113, r:3.7, c:351, addr:'孝一路65號', h:'～21:30', tel:'02-2425-5899', note:'' },
+    { a:'kl', n:'清心福全 基隆仁四店', t:'chain', lat:25.1283763, lon:121.7410403, r:3.7, c:133, addr:'仁四路58號', h:'～21:00', tel:'02-2427-7676', note:'' },
+    { a:'kl', n:'迷客夏 Milksha 基隆廟口店', t:'chain', lat:25.1289669, lon:121.742263, r:3.2, c:333, addr:'仁三路80號', h:'～21:00', tel:'02-2426-1766', note:'夜市裡，評價偏低' },
+    { a:'kl', n:'老賴茶棧 基隆廟口店', t:'chain', lat:25.1277831, lon:121.74334, r:3.8, c:290, addr:'愛四路8-2號', h:'～00:00', tel:'02-2426-8820', note:'開到半夜' },
+    { a:'kl', n:'抿茶 min cha 基隆廟口店', t:'local', lat:25.128596, lon:121.7430137, r:3.9, c:38, addr:'仁三路62號', h:'～21:00', tel:'02-2428-8629', note:'夜市裡' },
+    // 和平島・正濱
+    { a:'hp', star:1, n:'耶穌愛喝茶', t:'local', lat:25.1552018, lon:121.7694212, r:4.9, c:34, addr:'和一路2巷1-36號（海產街，35號餐廳旁）', h:'五 10:00–19:30', tel:'0987-381-398', note:'海宴同一排，吃完飯順手買' },
+    { a:'hp', n:'島上有冰', t:'ice', lat:25.1547048, lon:121.7683786, r:4.2, c:472, addr:'和一路32號', h:'五 11:00–18:00（週一～三休）', tel:'02-2462-0118', note:'過橋前，和平島公園回程可吃' },
+    { a:'hp', n:'海漾拾光（咖啡・冰品）', t:'tea', lat:25.1534306, lon:121.769314, r:4.8, c:275, addr:'正濱路108號', h:'五 09:00–17:00（其他天 13:00 起）', tel:'0989-882-990', note:'正濱漁港彩色屋對岸，16:00 拍照時剛好' },
+    { a:'hp', star:1, n:'CoCo 都可 基隆海洋店', t:'chain', lat:25.1509305, lon:121.7719389, r:4.8, c:198, addr:'中正路820號', h:'～21:00', tel:'02-2462-0586', note:'回市區路上、海洋大學對面，CoCo 評價最好的一間' },
+    { a:'hp', n:'得正 基隆海大計劃', t:'chain', lat:25.1507128, lon:121.7720889, r:4.6, c:429, addr:'祥豐街855號', h:'～21:30', tel:'02-2462-1016', note:'海大旁' },
+    { a:'hp', n:'添好茶', t:'local', lat:25.1512528, lon:121.7714531, r:4.5, c:123, addr:'中正路798號', h:'～20:45', tel:'02-2462-9898', note:'' },
+    { a:'hp', n:'沁茶悅 海大店', t:'local', lat:25.1519155, lon:121.7697634, r:4.2, c:102, addr:'中正路754號', h:'～20:45', tel:'02-2462-0078', note:'' },
+    { a:'hp', n:'清心福全 海大店', t:'chain', lat:25.1515452, lon:121.7707401, r:2.9, c:114, addr:'中正路782號', h:'～22:45', tel:'02-2462-6266', note:'評價偏低' },
+    // 九份
+    { a:'jf', star:1, n:'小千の冰朴店', t:'ice', lat:25.110257, lon:121.8450846, r:4.9, c:1061, addr:'輕便路55號', h:'五 11:00–19:00・六 10:00–19:00（週四休）', tel:'02-2406-2139', note:'民宿走路 2 分，芋圓冰、豆花' },
+    { a:'jf', star:1, n:'水心月茶坊', t:'tea', lat:25.1086616, lon:121.8429576, r:4.9, c:1185, addr:'輕便路308號', h:'～19:00', tel:'', note:'民宿同一條路，坐下來喝茶看海' },
+    { a:'jf', n:'淂藝洋行 DAY EAT TEAHOUSE', t:'tea', lat:25.1088828, lon:121.8448367, r:4.9, c:501, addr:'輕便路226號', h:'～18:00', tel:'', note:'民宿隔壁幾個門牌' },
+    { a:'jf', n:'九份茶坊', t:'tea', lat:25.1081848, lon:121.8435143, r:4.8, c:3039, addr:'基山街142號', h:'～20:00', tel:'', note:'老宅茶館' },
+    { a:'jf', n:'阿妹茶樓', t:'tea', lat:25.1085634, lon:121.8436065, r:4.0, c:6141, addr:'市下巷20號（豎崎路階梯旁）', h:'～21:30', tel:'', note:'最有名、人最多；晚上拍照用' },
+    { a:'jf', n:'吾穀茶糧 九份食茶館', t:'tea', lat:25.1078751, lon:121.84316, r:4.7, c:855, addr:'基山街166號', h:'～18:00', tel:'', note:'' },
+    { a:'jf', n:'酉時暮光（咖啡）', t:'tea', lat:25.1101334, lon:121.844936, r:4.8, c:469, addr:'輕便路61號', h:'～19:00', tel:'02-2406-2525', note:'' },
+    { a:'jf', n:'幸福堂 九份舊道口店', t:'chain', lat:25.1093439, lon:121.845571, r:3.6, c:177, addr:'基山街5號', h:'～20:00', tel:'0921-141-243', note:'黑糖珍奶，老街入口' },
+    { a:'jf', n:'金采昀', t:'local', lat:25.1096579, lon:121.8452178, r:4.4, c:18, addr:'基山街4號', h:'～21:00', tel:'', note:'老街入口' },
+    { a:'jf', n:'涵韻茶飲', t:'local', lat:25.1087579, lon:121.8445726, r:4.2, c:62, addr:'基山街80號', h:'～20:00', tel:'0966-326-852', note:'' },
+    // 瑞芳站前
+    { a:'rf', star:1, n:'DrinkStore 水雲朵 新北瑞芳店', t:'chain', lat:25.107746, lon:121.8060459, r:4.8, c:769, addr:'民生街15號', h:'～21:00', tel:'02-2496-8586', note:'美食廣場走出去 1 分' },
+    { a:'rf', star:1, n:'50嵐 瑞芳店', t:'chain', lat:25.1080485, lon:121.8062521, r:4.3, c:467, addr:'明燈路三段53號', h:'～21:00', tel:'02-2497-6150', note:'車站對面那排' },
+    { a:'rf', n:'CoCo 都可 瑞芳店', t:'chain', lat:25.1078075, lon:121.8060429, r:4.3, c:235, addr:'民生街13號', h:'～21:30', tel:'02-2497-3661', note:'水雲朵隔壁' },
+    { a:'rf', n:'迷客夏 Milksha 新北瑞芳店', t:'chain', lat:25.1078937, lon:121.8066941, r:4.7, c:47, addr:'明燈路三段43號1樓', h:'～21:30', tel:'02-2496-0458', note:'' },
+    { a:'rf', n:'COMEBUY 瑞芳站前店', t:'chain', lat:25.1078529, lon:121.8060911, r:4.0, c:62, addr:'民生街11號', h:'～21:00', tel:'02-2496-8866', note:'' },
+    { a:'rf', n:'五道口茶屋', t:'local', lat:25.1080159, lon:121.806413, r:4.7, c:84, addr:'明燈路三段49號', h:'～22:00', tel:'02-2497-0655', note:'' },
+    { a:'rf', n:'紅茶老店（瑞芳美食廣場內）', t:'local', lat:25.1068402, lon:121.8055909, r:4.0, c:395, addr:'民生街35巷（美食廣場內）', h:'～19:00', tel:'', note:'吃豐味肉羹時順手買' },
+    { a:'rf', n:'老街口愛玉', t:'ice', lat:25.1067855, lon:121.8057626, r:4.4, c:36, addr:'民生街35巷2號（美食廣場）', h:'六 09:00–19:00（平日 11:00–16:00）', tel:'', note:'' },
+    { a:'rf', n:'芳三里紅茶老店', t:'local', lat:25.1069199, lon:121.8054906, r:3.9, c:64, addr:'民生街36號', h:'～19:00', tel:'02-2497-2970', note:'' },
+    { a:'rf', n:'超大杯冷熱飲專賣店', t:'local', lat:25.1080669, lon:121.8061735, r:3.9, c:229, addr:'明燈路三段55號', h:'～22:00', tel:'02-2406-3100', note:'' },
+    { a:'rf', n:'清心福全 瑞芳明燈店', t:'chain', lat:25.1078912, lon:121.8066917, r:2.9, c:58, addr:'明燈路三段45號', h:'～22:00', tel:'02-2497-7676', note:'評價偏低' },
+    { a:'rf', n:'等一隻貓茶飲×點心', t:'local', lat:25.1056716, lon:121.8055721, r:4.8, c:109, addr:'三爪子坑路236號1樓', h:'17:00 起（以 FB 公告為準）', tel:'0963-980-986', note:'' },
+    // 雙溪
+    { a:'sx', star:1, n:'謝謝您冰品', t:'ice', lat:25.0390148, lon:121.8660399, r:4.1, c:87, addr:'中華路90號', h:'六 09:00–18:00', tel:'0912-276-849', note:'蘇義興走路 1 分，剉冰、飲料' },
+    { a:'sx', n:'7-ELEVEN 雙溪門市', t:'cvs', lat:25.0391002, lon:121.8661431, r:3.5, c:132, addr:'自強路7號', h:'24 小時', tel:'02-2493-1201', note:'謝謝您冰品隔壁' },
+    { a:'sx', n:'水水弎栖 Dew Cafe', t:'tea', lat:25.0323562, lon:121.8658629, r:4.8, c:155, addr:'中山路37號', h:'～17:00（週二三休）', tel:'02-2493-0037', note:'老屋咖啡，距蘇義興 650 m' },
+    // 十分
+    { a:'sf', star:1, n:'飲嚐品', t:'local', lat:25.0423443, lon:121.7765231, r:4.8, c:513, addr:'十分街86號', h:'未標營業時間', tel:'02-2495-8209', note:'老街人氣最高的飲料攤' },
+    { a:'sf', n:'十分好喝珍奶茶飲專賣', t:'local', lat:25.0427367, lon:121.7768464, r:4.8, c:66, addr:'十分街104號', h:'～17:30', tel:'', note:'' },
+    { a:'sf', n:'祥賀糖 DRINK SWEET', t:'local', lat:25.043228, lon:121.7774062, r:4.8, c:42, addr:'十分街140號', h:'～17:30', tel:'0930-730-319', note:'' },
+    { a:'sf', n:'恐龍喝茶', t:'local', lat:25.04304, lon:121.7770284, r:4.4, c:81, addr:'十分街118號', h:'未標營業時間', tel:'0975-780-655', note:'' },
+    { a:'sf', n:'十分冬天柳丁汁', t:'local', lat:25.0435469, lon:121.7783229, r:4.8, c:55, addr:'十分街164號', h:'未標營業時間', tel:'0929-932-070', note:'現榨柳丁汁' },
+    { a:'sf', n:'十分柑ma店（咖啡）', t:'tea', lat:25.0442291, lon:121.7790374, r:4.9, c:159, addr:'十分街200號', h:'～17:00（店長常請假）', tel:'0913-859-231', note:'' },
+    { a:'sf', n:'十分樓仔厝咖啡', t:'tea', lat:25.0421292, lon:121.7765892, r:4.7, c:541, addr:'十分街74巷3號', h:'～18:00', tel:'0966-502-503', note:'' },
+    { a:'sf', n:'壹肆玖冰菓攤', t:'ice', lat:25.0433722, lon:121.7774192, r:5.0, c:21, addr:'十分街149號', h:'未標營業時間', tel:'', note:'' },
+    // 金瓜石・水湳洞
+    { a:'jgs', star:1, n:'山頂豆花', t:'ice', lat:25.109737, lon:121.8604367, r:4.6, c:578, addr:'祈堂路7號（祈堂老街）', h:'日 09:00–17:30（只開六日，店休以 FB/IG 公告為準）', tel:'', note:'報時山 09:10 下來唯一有開的；豆花、仙草' },
+    { a:'jgs', n:'玫瑰山城柑仔店（咖啡）', t:'tea', lat:25.1214099, lon:121.8615316, r:4.7, c:415, addr:'洞頂路155-1號', h:'日 11:00–20:00', tel:'02-2496-1818', note:'水湳洞上方，09:50 經過時還沒開' },
+    { a:'jgs', n:'Cafe & me', t:'tea', lat:25.1083633, lon:121.8603114, r:4.7, c:385, addr:'祈堂路99號', h:'～19:00', tel:'0916-036-633', note:'' },
+    { a:'jgs', n:'寬哥的關於咖啡', t:'tea', lat:25.1189699, lon:121.8615138, r:4.4, c:1574, addr:'明里路99號', h:'～19:30', tel:'0978-857-662', note:'餐廳，現場候位' },
+    { a:'jgs', n:'風流珈琲', t:'tea', lat:25.119054, lon:121.8615279, r:4.6, c:160, addr:'明里路85號', h:'～17:00', tel:'0963-249-012', note:'低消一人一杯' },
+    // 金山
+    { a:'js', star:1, n:'Jelly Belly', t:'local', lat:25.2217807, lon:121.6387145, r:4.9, c:58, addr:'金包里街82號', h:'日 10:00–18:30', tel:'0963-387-766', note:'老街裡評價最高的飲料店' },
+    { a:'js', star:1, n:'50嵐 台北金山店', t:'chain', lat:25.2217127, lon:121.6373827, r:4.1, c:143, addr:'中山路231號', h:'～22:00', tel:'02-2408-1258', note:'老街口外的中山路上' },
+    { a:'js', n:'CoCo 都可 新北金山店', t:'chain', lat:25.2211096, lon:121.6379824, r:4.3, c:445, addr:'中山路193號', h:'～21:30', tel:'02-2498-0808', note:'' },
+    { a:'js', n:'華芝香檸檬店', t:'local', lat:25.2222063, lon:121.638103, r:4.8, c:30, addr:'金包里街118號', h:'日 10:00–19:30', tel:'0937-652-898', note:'現榨檸檬汁' },
+    { a:'js', n:'金山。紅', t:'ice', lat:25.2210407, lon:121.6396305, r:4.8, c:2109, addr:'金包里街40號', h:'～19:00', tel:'02-2498-2626', note:'蒙布朗冰淇淋（行程頁的甜點）' },
+    { a:'js', n:'野生愛玉手工粉圓', t:'ice', lat:25.2209299, lon:121.6395469, r:4.7, c:38, addr:'金包里街21號', h:'～20:00', tel:'0971-702-056', note:'' },
+    { a:'js', n:'金山仙草茶', t:'local', lat:25.2219377, lon:121.6383711, r:4.4, c:21, addr:'金包里街102號', h:'～17:00', tel:'', note:'鴨肉ㄜ隔壁' },
+    { a:'js', n:'皇爵 金山中山店', t:'local', lat:25.2220163, lon:121.6370839, r:3.8, c:80, addr:'中山路251號', h:'～22:30', tel:'02-2408-2520', note:'' },
+    { a:'js', n:'清心福全 金山中山店', t:'chain', lat:25.2198227, lon:121.6391871, r:3.0, c:184, addr:'中山路127號', h:'～21:00', tel:'02-2498-7528', note:'評價偏低' },
+    { a:'js', n:'Triple Two 磺火店', t:'local', lat:25.2276733, lon:121.6470027, r:5.0, c:12, addr:'磺港路（獅頭山停車場附近）', h:'～18:00', tel:'0955-058-522', note:'12:45 去獅頭山順路' },
+    // 野柳
+    { a:'yl', star:1, n:'周董', t:'ice', lat:25.2049949, lon:121.6889558, r:4.2, c:96, addr:'港東路74-3號', h:'日 09:00–19:30', tel:'02-2492-2110', note:'野柳地質公園入口前' },
+    { a:'yl', n:'甜柳柳鮮果吧', t:'local', lat:25.2049158, lon:121.6898723, r:4.9, c:16, addr:'港東路159號', h:'～18:00', tel:'', note:'現打果汁' },
+    { a:'yl', n:'一間冰屋', t:'ice', lat:25.2054808, lon:121.6910626, r:3.6, c:203, addr:'港東路167-3號', h:'～17:30', tel:'', note:'' },
+    { a:'yl', n:'芳仁哥冰品店', t:'ice', lat:25.2049979, lon:121.6891867, r:4.8, c:44, addr:'港東路74-10號', h:'日 11:00–18:30（只開六日）', tel:'0970-607-705', note:'' }
+  ];
+
+  var STOPS = [
+    { n:'格上租車 台北南港站（D1 取車・D3 還車）', lat:25.0561678, lon:121.620091 },
+    { n:'南港車站（高鐵）', lat:25.05311, lon:121.60692 },
+    { n:'海宴海產店（D1 午）', lat:25.1556424, lon:121.7698253 },
+    { n:'和平島公園', lat:25.1631, lon:121.7626 },
+    { n:'正濱漁港彩色屋', lat:25.1503, lon:121.7676 },
+    { n:'基隆廟口夜市（D1 晚）', lat:25.1286, lon:121.7429 },
+    { n:'九份老街', lat:25.1069, lon:121.8420 },
+    { n:'蘇義興餐廳（D2 午）', lat:25.0383208, lon:121.8656852 },
+    { n:'十分老街', lat:25.0430, lon:121.7756 },
+    { n:'十分瀑布', lat:25.0447, lon:121.7830 },
+    { n:'瑞芳美食廣場（D2 晚）', lat:25.1068421, lon:121.8056816 },
+    { n:'報時山（D3 早）', lat:25.1137, lon:121.8596 },
+    { n:'水湳洞・陰陽海', lat:25.1183, lon:121.8647 },
+    { n:'金包里老街（D3 午）', lat:25.2219698, lon:121.6383848 },
+    { n:'獅頭山公園', lat:25.2252514, lon:121.648574 },
+    { n:'野柳（備案）', lat:25.2055, lon:121.6895 }
+  ];
+  var HOME = { n:'隱山居 本館（住宿）', lat:25.109270, lon:121.844121 };
+
+  function dist(a, b) {
+    var R = 6371000, toRad = Math.PI / 180;
+    var dLat = (b.lat - a.lat) * toRad, dLon = (b.lon - a.lon) * toRad;
+    var s = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(a.lat*toRad) * Math.cos(b.lat*toRad) * Math.sin(dLon/2) * Math.sin(dLon/2);
+    return 2 * R * Math.asin(Math.sqrt(s));
+  }
+  function fmtDist(m) { return m < 1000 ? Math.round(m / 10) * 10 + ' m' : (m / 1000).toFixed(1) + ' km'; }
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function mapLink(s) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.n + ' ' + s.addr); }
+  function navLink(s) { return 'https://www.google.com/maps/dir/?api=1&destination=' + s.lat + ',' + s.lon + '&travelmode=walking'; }
+  function liveLink(a) { return 'https://www.google.com/maps/search/' + encodeURIComponent('飲料店') + '/@' + a.lat + ',' + a.lon + ',16z'; }
+  function areaById(id) { for (var i = 0; i < AREAS.length; i++) if (AREAS[i].id === id) return AREAS[i]; return null; }
+
+  // ---- map ----
+  var map = L.map('map', { scrollWheelZoom: false }).setView([25.14, 121.76], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+
+  STOPS.forEach(function (p) {
+    L.marker([p.lat, p.lon], { icon: L.divIcon({ className: '', html: '<div class="stop-pin"></div>', iconSize: [12, 12], iconAnchor: [6, 6] }), zIndexOffset: -100 })
+      .bindTooltip(p.n, { direction: 'top', offset: [0, -6] }).addTo(map);
+  });
+  L.marker([HOME.lat, HOME.lon], { icon: L.divIcon({ className: '', html: '<div class="home-pin"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }), zIndexOffset: 200 })
+    .bindTooltip(HOME.n, { direction: 'top', offset: [0, -8] }).addTo(map);
+
+  var shopLayer = L.layerGroup().addTo(map);
+  var markers = [];
+  SHOPS.forEach(function (s) {
+    var col = TYPES[s.t].color;
+    var m = L.circleMarker([s.lat, s.lon], {
+      radius: s.star ? 10 : 7, color: '#fff', weight: s.star ? 3 : 1.5, fillColor: col, fillOpacity: 0.95
+    });
+    var html = '<b>' + (s.star ? '★ ' : '') + esc(s.n) + '</b> <span class="tag" style="background:' + col + '">' + TYPES[s.t].label + '</span><br>' +
+      '<span style="color:#b45309;font-weight:700">' + s.r.toFixed(1) + '★</span>（' + s.c.toLocaleString() + '）· ' + esc(s.h) + '<br>' +
+      '<span style="color:#57534e">' + esc(s.addr) + '</span>' + (s.note ? '<br><span style="color:#78716c">' + esc(s.note) + '</span>' : '') +
+      (s.tel ? '<br><a href="tel:' + s.tel.replace(/-/g, '') + '" style="color:#0f766e;font-weight:700">' + s.tel + '</a>' : '') + '<br>' +
+      '<a class="btn" style="background:#fef3c7;color:#b45309" target="_blank" rel="noopener" href="' + mapLink(s) + '"><i class="fa-brands fa-google"></i> 地圖</a>' +
+      '<a class="btn" style="background:#e0f2fe;color:#0369a1" target="_blank" rel="noopener" href="' + navLink(s) + '"><i class="fa-solid fa-person-walking"></i> 導航</a>';
+    m.bindPopup(html);
+    m._shop = s;
+    markers.push(m);
+  });
+
+  var cur = 'all';
+  function applyFilter() {
+    shopLayer.clearLayers();
+    var b = [];
+    markers.forEach(function (m) {
+      if (cur === 'all' || m._shop.a === cur) { shopLayer.addLayer(m); b.push(m.getLatLng()); }
+    });
+    if (cur !== 'all') { var a = areaById(cur); b.push([a.lat, a.lon]); }
+    if (b.length) map.fitBounds(L.latLngBounds(b), { padding: [30, 30], maxZoom: cur === 'all' ? 12 : 17 });
+    document.querySelectorAll('#chips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.id === cur); });
+    document.querySelectorAll('#list .area-card').forEach(function (c) { c.style.display = (cur === 'all' || c.dataset.id === cur) ? '' : 'none'; });
+  }
+
+  // ---- chips ----
+  var chips = document.getElementById('chips');
+  var all = document.createElement('button'); all.className = 'chip on'; all.dataset.id = 'all'; all.textContent = '全部'; chips.appendChild(all);
+  AREAS.forEach(function (a) {
+    var c = document.createElement('button'); c.className = 'chip'; c.dataset.id = a.id; c.textContent = a.name.replace(/（.*）/, ''); chips.appendChild(c);
+  });
+  chips.addEventListener('click', function (e) {
+    var c = e.target.closest('.chip'); if (!c) return;
+    cur = c.dataset.id; applyFilter();
+    if (cur !== 'all') document.getElementById('drinkmap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // ---- list ----
+  var list = document.getElementById('list');
+  AREAS.forEach(function (a) {
+    var shops = SHOPS.filter(function (s) { return s.a === a.id; });
+    shops.sort(function (x, y) { return (y.star ? 1 : 0) - (x.star ? 1 : 0) || dist(a, x) - dist(a, y); });
+    var card = document.createElement('section');
+    card.className = 'area-card bg-white rounded-2xl border border-stone-200 p-4 md:p-5';
+    card.dataset.id = a.id;
+    var rows = shops.map(function (s) {
+      var col = TYPES[s.t].color;
+      return '<div class="row">' +
+        '<div class="text-amber-500 text-sm pt-0.5">' + (s.star ? '<i class="fa-solid fa-star"></i>' : '') + '</div>' +
+        '<div class="min-w-0"><p class="text-sm font-bold text-stone-800 leading-snug">' + esc(s.n) + ' <span class="tag" style="background:' + col + '">' + TYPES[s.t].label + '</span></p>' +
+        '<p class="text-xs text-stone-600 mt-0.5"><span class="font-bold text-amber-700">' + s.r.toFixed(1) + '★</span><span class="text-stone-400">（' + s.c.toLocaleString() + '）</span> · <i class="fa-regular fa-clock mr-0.5"></i>' + esc(s.h) + ' · <i class="fa-solid fa-person-walking mr-0.5"></i>' + fmtDist(dist(a, s)) + '</p>' +
+        '<p class="text-xs text-stone-500 mt-0.5">' + esc(s.addr) + (s.note ? '　<span class="text-stone-600">' + esc(s.note) + '</span>' : '') + '</p></div>' +
+        '<div class="flex flex-col items-end gap-1 text-xs whitespace-nowrap">' +
+        '<a class="text-amber-700 font-bold hover:underline" target="_blank" rel="noopener" href="' + mapLink(s) + '"><i class="fa-brands fa-google mr-0.5"></i>地圖</a>' +
+        '<a class="text-sky-700 font-bold hover:underline" target="_blank" rel="noopener" href="' + navLink(s) + '"><i class="fa-solid fa-diamond-turn-right mr-0.5"></i>導航</a>' +
+        (s.tel ? '<a class="text-brand-700 font-bold hover:underline" href="tel:' + s.tel.replace(/-/g, '') + '"><i class="fa-solid fa-phone mr-0.5"></i>' + s.tel + '</a>' : '') +
+        '</div></div>';
+    }).join('');
+    card.innerHTML =
+      '<div class="flex flex-wrap items-start justify-between gap-2">' +
+        '<div><p class="text-xs font-bold text-amber-700">' + esc(a.day) + '</p>' +
+        '<h3 class="text-lg font-black text-stone-800">' + esc(a.name) + '</h3>' +
+        '<p class="text-xs text-stone-500"><i class="fa-solid fa-location-dot mr-1"></i>距離以 ' + esc(a.anchor) + ' 為起點 · ' + shops.length + ' 家</p></div>' +
+        '<div class="flex gap-2">' +
+          '<button class="zoom-btn text-xs font-bold bg-stone-100 hover:bg-stone-200 text-stone-700 px-3 py-1.5 rounded-lg" data-id="' + a.id + '"><i class="fa-solid fa-magnifying-glass-location mr-1"></i>看地圖</button>' +
+          '<a class="text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-lg" target="_blank" rel="noopener" href="' + liveLink(a) + '"><i class="fa-brands fa-google mr-1"></i>Google 即時搜尋</a>' +
+        '</div></div>' +
+      '<p class="text-sm text-stone-600 mt-2 leading-relaxed bg-amber-50 border border-amber-100 rounded-xl px-3 py-2">' + esc(a.tip) + '</p>' +
+      '<div class="mt-2">' + rows + '</div>';
+    list.appendChild(card);
+  });
+  list.addEventListener('click', function (e) {
+    var b = e.target.closest('.zoom-btn'); if (!b) return;
+    cur = b.dataset.id; applyFilter();
+    document.getElementById('drinkmap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  applyFilter();
+})();
+</script>
+</body>
+</html>
